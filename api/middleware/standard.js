@@ -1,6 +1,5 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
-//const morgan = require('morgan');
 var fs = require('fs')
 var morgan = require('morgan');
 var path = require('path');
@@ -24,7 +23,6 @@ class StandardMiddleware {
             limit: '1kb',
             extended: true
           }));
-
         app.use(cors());
     }
 }

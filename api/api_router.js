@@ -3,15 +3,28 @@ const TOKEN_AUTH = require('./middleware/token_auth');
 const APP_CONFIG = require('./middleware/app_config');
 
 class api_router {
-
     create() {
         let route = express();
 
         /* ROUTING TO MIDDLEWARE FOR X-API-KEY AND TOKEN AUTHENTICATION */
-        route.use('/', APP_CONFIG, TOKEN_AUTH);
+        //route.use('/', APP_CONFIG, TOKEN_AUTH);
 
         /* API ENDPOINTS */
-        
+        route.use('/get_remoteconfig', require('./routes/get_remoteconfig'));
+        route.use('/get_missions',require('./routes/get_missions'));
+        route.use('/get_dashboarddetails',require('./routes/get_dashboarddetails'));
+        route.use('/get_rankings',require('./routes/get_rankings'));
+        route.use('/get_upgrades',require('./routes/get_upgrades'));
+        route.use('/claim_reward',require('./routes/claim_reward'));
+        route.use('/login_user',require('./routes/login_user'));
+        route.use('/logout',require('./routes/logout'));
+        route.use('/register_user',require('./routes/register_user'));
+        route.use('/update_nickname',require('./routes/update_nickname'));
+        route.use('/update_score',require('./routes/update_score'));
+        route.use('/upgrades',require('./routes/upgrades'));
+        route.use('/validate_otp',require('./routes/validate_otp'));
+        route.use('/validate_reciept',require('./routes/validate_reciept'));
+
         return route;
     }
 }

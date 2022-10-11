@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
     if (CONFIG.MAINTANANCE_MODE == 'Y') {
         let response = {
             status: 'S',
-            msg: "Servers maintanance la iruku. Wait pannunga",
+            msg: "Servers are under maintanance . please retry after sometime",
             app_config: UTILS.get_app_config()
         }
         res.send(response);
@@ -34,5 +34,6 @@ module.exports = (req, res, next) => {
     }
     else {
         next();
+        console.log("next");
     }
 };

@@ -6,10 +6,7 @@ module.exports = async (req, res, next) => {
         //Pre-Login endpoints which does not have Authorization token
         let X_API_KEY = req.headers['x-api-key'];
         let AUTHORIZATION = req.headers['authorization'];
-
-        let only_x_api_key_endpoints = [
-           
-        ];
+        let only_x_api_key_endpoints = [];
 
         let requested_url = req.url.replace('/', '')
         if (only_x_api_key_endpoints.includes(requested_url)) {

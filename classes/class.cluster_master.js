@@ -3,8 +3,6 @@ const cluster = require('cluster');
 const CONFIG = require('../common/inc.config');
 const standardmiddleware = require('../api/middleware/standard');
 const api_router = require('../api/api_router');
-
-
 const cpu_count = require('os').cpus().length;
 
 class Server {
@@ -58,7 +56,7 @@ class Server {
         app.get('/',function(req,res){res.send('<h1>API ENDPOINT</h1>')});
         app.get('/api',function(req,res){res.send('<h1>API ENDPOINT</h1>')});
         app.use('/api', api_router.create());
-        app.use('/debug',require('../debug/app'));
+        //app.use('/debug',require('../debug/app'));
         app.get('*', (req, res) => res.send('Page Not found 404'));
         await this.start_listening(app);
         this.epress_apps.push(app);

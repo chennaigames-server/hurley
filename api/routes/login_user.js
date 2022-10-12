@@ -27,6 +27,32 @@ router.post('/', async (req, res) => {
         var data = req.body;
         var email_id = data.email_id;
 
+        if (email_id != '' && data.hasOwnProperty('email_id')) {
+            var query_parameter = { email_id: data.email_id };
+            var projection_parameter = { _id: 1, validated: 1 };
+            var exist_in_gamedb = await dbobj.db.collection('app_user_accounts').find(query_parameter).project(projection_parameter).limit(1).toArray();
+            if (exist_in_gamedb.length == 0) {
+                /* REGISTRATION INCOMPLETE USER */
+                response_code = 0;
+                msg = CONFIG.MESSAGES.NO_ACCOUNT;
+            }
+            else {
+                if (exist_in_gamedb[0].validated == 1) {
+                    var otp = UTILS.generate_otp();
+                    var query_parameter = { email_id: email_id };
+                    var update_parameter = { $set: { otp: otp } };
+                    await dbobj.db.collection('app_user_accounts').updateOne(query_parameter, update_parameter);
+                    //await UTILS.send_otp(email_id, otp);
+
+                    response_code = 1;
+                    msg = CONFIG.MESSAGES.OTP_SENT;
+                }
+                else {
+                    response_code = 0;
+                    msg = CONFIG.MESSAGES.NO_ACCOUNT;
+                }
+            }
+
             /* BUILD RESPONSE */
             response = {
                 "status": "S",
@@ -41,7 +67,7 @@ router.post('/', async (req, res) => {
                   "m_t": 0
                 }
               };
-     
+            }
 
         /* LOGGER */
         logger.log({

@@ -26,6 +26,13 @@ router.post('/', async (req, res) => {
         var data = req.body;
         var gid = data.gid;
 
+        /* LOGOUT FROM GAME DATABASE ALSO */
+        var query_parameter = { gid: gid };
+        var update_parameter = { $set: { logout: 'Y' } };
+        await dbobj.db.collection('app_user_accounts').updateOne(query_parameter, update_parameter);
+        response_code = 1;
+        msg = CONFIG.MESSAGES.LOGOUT;
+
        
         response = {
             "status": "S",

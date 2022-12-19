@@ -16,7 +16,13 @@ module.exports = {
     /* DATABASE CREDENTIALS */
     DB_ENDPOINT: 'mongodb://admin:RrSEWZ6DzDozJkg@3.6.99.7:16006/?directConnection=true&tls=false&authMechanism=DEFAULT&authSource=admin',
     DB_NAME: 'hurley_dev',
-
+    
+    /* REDIS */
+    // REDIS_URL: 'redis://43.205.158.192:5268',
+    // REDIS_PASSWORD: 'raddxredis',
+    REDIS_URL: 'redis://127.0.0.1:6379',
+    REDIS_PASSWORD: '',
+   
     /* COMMON UI PARAMETERS */
 
     OTP_RETRY: 3,

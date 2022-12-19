@@ -9,7 +9,7 @@ module.exports = {
   
 
     /* DEPLOYMENT PARAMETERS */
-    API_PORT: 3000,
+    API_PORT: 52600,
 
     /* AUTHENTICATION PARAMETERS */
     X_API_KEY: 'ABCD123',
@@ -24,7 +24,6 @@ module.exports = {
 
     DB_NAME: 'hurley_dev',
     
-
     /* REDIS */
     // REDIS_URL: 'redis://43.205.158.192:5268',
     // REDIS_PASSWORD: 'raddxredis',

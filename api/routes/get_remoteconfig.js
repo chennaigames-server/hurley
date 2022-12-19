@@ -23,7 +23,6 @@ router.post('/', (req, res) => {
             
                 "status": "S",
                 "msg": "Success",
-                "api_base_url": "http://localhost:3000/api/",
                 "app_config": {
                     "f_u": "N",
                     "m": "N",

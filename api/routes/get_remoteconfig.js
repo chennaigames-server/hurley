@@ -15,16 +15,20 @@ router.post('/', (req, res) => {
         let logger = winston.logger();
 
         /* RESPONSE */
-        let response = {            
+        let response = {
+            
                 "status": "S",
                 "msg": "Success",
+                "api_base_url": " ",
                 "app_config": {
                     "f_u": "N",
                     "m": "N",
                     "i_d": "N",
                     "m_t": 0
                 }
+                
             }
+      
         /* OUTPUT */
         logger.log({
             level: 'info',

@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
 
         /* REQUEST PARAMETERS */
         var data = req.body;
-
+        
                 /* BUILD RESPONSE */
                 response = {
                     "status": "S",

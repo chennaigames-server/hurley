@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/www/html/raddx_api_dev
+    destination: /var/www/html/hurley
 hooks:
 # ApplicationStop:
 # DownloadBundle:

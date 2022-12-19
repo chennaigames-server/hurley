@@ -16,7 +16,6 @@ router.post('/', (req, res) => {
 
         /* RESPONSE */
         let response = {
-            
                 "status": "S",
                 "msg": "Success",
                 "api_base_url": " ",
@@ -26,7 +25,6 @@ router.post('/', (req, res) => {
                     "i_d": "N",
                     "m_t": 0
                 }
-                
             }
       
         /* OUTPUT */

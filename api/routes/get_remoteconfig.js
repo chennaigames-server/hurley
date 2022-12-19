@@ -14,25 +14,17 @@ router.post('/', (req, res) => {
         let winston = new loggerobj(__filename);
         let logger = winston.logger();
 
-        // var device_id = req.body.device_id;
-        // var api_url = CONFIG.API_BASE_URL;
-        // var app_version = parseInt(req.body.app_ver)
-
         /* RESPONSE */
-        let response = {
-            
+        let response = {            
                 "status": "S",
                 "msg": "Success",
-                "api_base_url": "http://localhost:3000/api/",
                 "app_config": {
                     "f_u": "N",
                     "m": "N",
                     "i_d": "N",
                     "m_t": 0
                 }
-                
             }
-      
         /* OUTPUT */
         logger.log({
             level: 'info',

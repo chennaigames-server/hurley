@@ -87,8 +87,8 @@ router.post('/', async (req, res) => {
                 await dbobj.db.collection('app_user_accounts').insertOne(insert_acct_data);
                 /* OTP MAIL */
                 //await UTILS.send_otp(email_id, otp);
-                var user_ownership = []
-                var nt_cars = await dbobj.db.collection('app_non_tradable_assets_master').find({}).project({ _id: 0 }).sort({ unit_id: 1 }).toArray()
+                var user_ownership = [];
+                var nt_cars = await dbobj.db.collection('app_non_tradable_assets_master').find({}).project({ _id: 0 }).sort({ unit_id: 1 }).toArray();
                 for (let i = 0; i < nt_cars.length; i++) {
                     var lf = new Date()
                     lf.setHours(00, 00)

@@ -77,7 +77,7 @@ router.post('/', async (req, res) => {
                   "referral_details": {
                     "code": "123ABC",
                     "r_bonus": 5000,
-                    "is_redeemed": "Y"
+                    "is_redeemed": "Y/N"
                   }
                 }
 

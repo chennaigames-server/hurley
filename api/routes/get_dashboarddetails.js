@@ -37,22 +37,22 @@ router.post('/', async (req, res) => {
                     "i_d": "N",
                     "m_t": 0
                   },
-                  "coin_balance": 1000,
-                  "nickname": "super_surfer",
                   "player_Details": {
-                
-                    "gender": 0,
-                    "b_id": "1",
-                    "c_id": "1",
-                    "avatar": "1",
-                    "xp_level": 1,
-                    "c_xp": 10,
-                    "t_xp": 500,
-                    "p_p": 70,
-                    "d_xp": "10/500 XP",
-                
+                    "coin_balance": 1000,
+                    "nickname": "super_surfer",
                     "char_details": {
-                      "char_id": 1,
+                      "gender": 0,
+                      "b_id": "1",
+                      "c_id": "1",
+                      "avatar": "1",
+                      "xp_level": 1,
+                      "c_xp": 10,
+                      "t_xp": 500,
+                      "p_p": 70,
+                      "d_xp": "10/500 XP",
+                
+                    },
+                    "asset_details": {
                       "back_attach": 1,
                       "bottom_attach": 2,
                       "face_attach": 3,
@@ -64,14 +64,15 @@ router.post('/', async (req, res) => {
                       "maleClaws_attach": 9,
                       "ornaments_attach": 10,
                       "topDress_attach": 11,
-                      "attr": {
-                        "agility": 10,
-                        "stamina": 20,
-                        "energy": 100,
-                        "durability": 10,
-                        "speed": 20,
-                        "damage": 0
-                      }
+                
+                    },
+                    "attr": {
+                      "agility": 10,
+                      "stamina": 20,
+                      "energy": 100,
+                      "durability": 10,
+                      "speed": 20,
+                      "damage": 0
                     }
                   },
                   "referral_details": {
@@ -80,7 +81,7 @@ router.post('/', async (req, res) => {
                     "is_redeemed": "Y"
                   }
                 }
-
+                
         /* LOGGER */
         logger.log({
             level: 'info',

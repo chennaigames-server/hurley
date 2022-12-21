@@ -30,6 +30,7 @@ class api_router {
 
         /* UPGRADE */
         route.use('/upgrades',require('./routes/upgrades'));
+        route.use('/upgrade_powerup',require('./routes/upgrade_powerup'));
         route.use('/get_upgrades',require('./routes/get_upgrades'));
 
         /* REWARD CLAIM */

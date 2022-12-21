@@ -49,31 +49,31 @@ router.post('/', async (req, res) => {
                       "c_xp": 10,
                       "t_xp": 500,
                       "p_p": 70,
-                      "d_xp": "10/500 XP",
-                
+                      "d_xp": "10/500 XP",  
+                      "asset_details": {
+                        "back_attach": 1,
+                        "bottom_attach": 2,
+                        "face_attach": 3,
+                        "glass_attach": 4,
+                        "hair_attach": 5,
+                        "hand_attach": 6,
+                        "head_attach": 7,
+                        "leg_attach": 8,
+                        "maleClaws_attach": 9,
+                        "ornaments_attach": 10,
+                        "topDress_attach": 11,
+                  
+                      },
+                      "attr": {
+                        "agility": 10,
+                        "stamina": 20,
+                        "energy": 100,
+                        "durability": 10,
+                        "speed": 20,
+                        "damage": 0
+                      }            
                     },
-                    "asset_details": {
-                      "back_attach": 1,
-                      "bottom_attach": 2,
-                      "face_attach": 3,
-                      "glass_attach": 4,
-                      "hair_attach": 5,
-                      "hand_attach": 6,
-                      "head_attach": 7,
-                      "leg_attach": 8,
-                      "maleClaws_attach": 9,
-                      "ornaments_attach": 10,
-                      "topDress_attach": 11,
-                
-                    },
-                    "attr": {
-                      "agility": 10,
-                      "stamina": 20,
-                      "energy": 100,
-                      "durability": 10,
-                      "speed": 20,
-                      "damage": 0
-                    }
+                   
                   },
                   "referral_details": {
                     "code": "123ABC",
@@ -81,7 +81,7 @@ router.post('/', async (req, res) => {
                     "is_redeemed": "Y"
                   }
                 }
-                
+
         /* LOGGER */
         logger.log({
             level: 'info',

@@ -28,36 +28,88 @@ router.post('/', async (req, res) => {
         var email_id = data.email_id;
 
         /* BUILD RESPONSE */
+        // response = {
+        //     "status": "S",
+        //     "msg": "Success",
+        //     "app_config": {
+        //         "f_u": "N",
+        //         "m": "N",
+        //         "i_d": "N",
+        //         "m_t": 0
+        //     },
+        //     "upgrades": [
+        //         {
+        //             "type": 1,
+        //             "upgr_cost": 1000,
+        //             "c_level": 1,
+        //             "t_level": 10,
+        //             "p_percent": 10,
+        //             "btn_status": 1,
+        //             "trans_id": ""
+        //         },
+        //         {
+        //             "type": 2,
+        //             "upgr_cost": 1000,
+        //             "c_level": 1,
+        //             "t_level": 10,
+        //             "p_percent": 10,
+        //             "btn_status": 1,
+        //             "trans_id": ""
+        //         }
+        //     ]
+        // }
         response = {
             "status": "S",
             "msg": "Success",
             "app_config": {
-                "f_u": "N",
-                "m": "N",
-                "i_d": "N",
-                "m_t": 0
+              "f_u": "N",
+              "m": "N",
+              "i_d": "N",
+              "m_t": 0
             },
             "upgrades": [
-                {
-                    "type": 1,
-                    "upgr_cost": 1000,
-                    "c_level": 1,
-                    "t_level": 10,
-                    "p_percent": 10,
-                    "btn_status": 1,
-                    "trans_id": ""
-                },
-                {
-                    "type": 2,
-                    "upgr_cost": 1000,
-                    "c_level": 1,
-                    "t_level": 10,
-                    "p_percent": 10,
-                    "btn_status": 1,
-                    "trans_id": ""
-                }
+              {
+                "id": 1,
+                "title": "Coin Magnet",
+                "desc": "Automatically collects all nearby coins",
+                "upgr_cost": 1000,
+                "c_level": 1,
+                "t_level": 10,
+                "p_percent": 10,
+                "btn_status": 1
+              },
+              {
+                "id": 1,
+                "title": "Coin Magnet",
+                "desc": "Automatically collects all nearby coins",
+                "upgr_cost": 1000,
+                "c_level": 1,
+                "t_level": 10,
+                "p_percent": 10,
+                "btn_status": 1
+              },
+              {
+                "id": 1,
+                "title": "Coin Magnet",
+                "desc": "Automatically collects all nearby coins",
+                "upgr_cost": 1000,
+                "c_level": 1,
+                "t_level": 10,
+                "p_percent": 10,
+                "btn_status": 1
+              },
+              {
+                "id": 1,
+                "title": "Coin Magnet",
+                "desc": "Automatically collects all nearby coins",
+                "upgr_cost": 1000,
+                "c_level": 1,
+                "t_level": 10,
+                "p_percent": 10,
+                "btn_status": 1
+              }
             ]
-        }
+          }
 
 
         /* LOGGER */

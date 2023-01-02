@@ -19,7 +19,7 @@ class api_router {
         route.use('/guest_user',require('./routes/play_as_guest'));
         route.use('/validate_otp',require('./routes/validate_otp'));
         route.use('/logout',require('./routes/logout'));
-        
+        route.use('/check_logindetails',require('./routes/check_logindetails'));
 
         /* MISSIONS */
         route.use('/get_dailymissions',require('./routes/get_dailymissions'));
@@ -31,7 +31,6 @@ class api_router {
         route.use('/profile_details',require('./routes/profile_details'));
         route.use('/get_char_details',require('./routes/get_char_details'));
         route.use('/set_character',require('./routes/set_character'));
-
 
         /* RANKING */
         route.use('/get_rankings',require('./routes/get_rankings'));
@@ -48,13 +47,12 @@ class api_router {
         route.use('/update_referralandnickname', require('./routes/update_referralandnickname'));
         route.use('/update_nickname',require('./routes/update_nickname'));
 
-         /* GAME START */
-         route.use('/get_surf',require('./routes/get_surf'));
+        /* GAME START */
+        route.use('/get_surf',require('./routes/get_surf'));
         
-         /* REPAIR SURF BOARD */
-         route.use('/repair_board',require('./routes/repair_board'));
+        /* REPAIR SURF BOARD */
+        route.use('/repair_board',require('./routes/repair_board'));
  
-
         /* SCORE */
         // route.use('/update_score',require('./routes/update_score'));
         
@@ -63,11 +61,6 @@ class api_router {
 
         /* SETTINGS */
         // route.use('/get_gamesettings',require('./routes/get_gamesettings'));
-
-       
-
-       
-
 
         return route;
     }

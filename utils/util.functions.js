@@ -439,7 +439,7 @@ async function create_event(dbobj, event_type, mode) {
 
 	console.log(query_parameter);
 	let get_exist_event = await dbobj.db.collection('app_rank_master').find(query_parameter).limit(1).toArray();
-console.log(get_exist_event);
+console.log(get_exist_event,"get_exist_event");
 // return false
 
 	if (get_exist_event.length > 0) {

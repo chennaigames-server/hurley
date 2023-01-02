@@ -4,11 +4,8 @@ const router = express.Router();
 const CONFIG = require('../../common/inc.config');
 const UTILS = require('../../utils/util.functions');
 
-
-
 router.post('/', (req, res) => {
     try {
-        console.log(req.body);
         /* LOGGER MODULE */
         var loggerobj = require('../../classes/class.logger');
         let winston = new loggerobj(__filename);

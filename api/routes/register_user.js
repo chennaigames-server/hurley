@@ -19,10 +19,15 @@ router.post('/', async (req, res) => {
     var app_config = UTILS.get_app_config();
 
     /* DATABASE REFERENCE */
-    // var dbconn = require('../../common/inc.dbconn');
-    // var dbobj = new dbconn();
+    var dbconn = require('../../common/inc.dbconn');
+    var dbobj = new dbconn();
+
+    /* MARKETPLACE CLASS */
+    const guardiangames = require('../../mp_classes/class.guardiangames');
+    var guardianobj = new guardiangames();
 
     try {
+
         /* REQUEST PARAMETERS */
         var data = req.body;
         var device_id = data.device_id;
@@ -31,38 +36,49 @@ router.post('/', async (req, res) => {
         var t_c = data.t_c;
         var platform = data.platform;
 
+        console.log(data,"register");
+
         if (data.hasOwnProperty('email_id') && email_id != '' && data.hasOwnProperty("t_c") && t_c != false) {
-
             var query_parameter = { email_id: email_id };
-            var projection_parameter = { _id: 1, validated: 1 };
+            var projection_parameter = { _id: 1, validated: 1, last_otp_sent_time: 1 };
             var exist_in_gamedb = await dbobj.db.collection('app_user_accounts').find(query_parameter).project(projection_parameter).limit(1).toArray();
-
+            console.log(exist_in_gamedb,"exist_in_gamedb::::");
             /* CHECK USER EXIST IN GAME DB */
             if (exist_in_gamedb.length > 0) {
                 /* USER EXIST IN GAME DB */
                 /* RESPONSE THE USER TO EMAIL IS ALREADY TAKEN */
                 if (exist_in_gamedb[0].validated == 0) {
-                    var otp = UTILS.generate_otp();
-                    var query_parameter = { email_id: email_id };
-                    var update_parameter = { $set: { otp: otp } };
-                    await dbobj.db.collection('app_user_accounts').updateOne(query_parameter, update_parameter);
-                    await UTILS.send_otp(email_id, otp);
+                    let otp_expiry_time = (new Date().getTime() - new Date(exist_in_gamedb[0].last_otp_sent_time).getTime()) / 1000;
+                    if (otp_expiry_time > 60) {
+                        var otp = UTILS.generate_otp();
+                        var query_parameter = { email_id: email_id };
+                        var update_parameter = { $set: { otp: otp, last_otp_sent_time: new Date() } };
+                        await dbobj.db.collection('app_user_accounts').updateOne(query_parameter, update_parameter);
+                        let email_data = {        
+                            email_id: email_id,
+                            otp: otp,
+                            type: "Register"
+                        }                     
+                            //  UTILS.send_otp(email_data);
+                    }
                     response_code = 1;
                     msg = CONFIG.MESSAGES.OTP_SENT;
                 }
                 else {
-                    response_code = 0;
+                    response_code = 2;
                     msg = CONFIG.MESSAGES.REGISTERED;
                 }
             }
             else {
+                console.log("else:::");
                 /* USER NOT EXIST IN GAME DB */
-                var gid = await UTILS.create_gid(dbobj);
+                var aid = await UTILS.create_aid(dbobj);
+                console.log(aid,"gid:::");
                 /* GENERATE OTP  */
                 var otp = UTILS.generate_otp();
                 /* INSERT USER ACCOUNT DETAILS IN DATABASE*/
                 var insert_acct_data = {
-                    gid: gid,
+                    aid: aid,
                     otp: otp,
                     validated: 0,
                     app_ver: app_ver,
@@ -70,9 +86,9 @@ router.post('/', async (req, res) => {
                     active_device: {
                         id: device_id,
                         p: platform,
-                        llon: new Date()
+                        llon: UTILS.CURRENT_DATE(new Date())
                     },
-                    crd_on: new Date(),
+                    crd_on: UTILS.CURRENT_DATE(new Date()),
                     mdy_on: '',
                     block_info: {
                         s: 'A',
@@ -81,62 +97,76 @@ router.post('/', async (req, res) => {
                     user_source: {
                         from: 'G'
                     },
-                    stat: 'A'
+                    stat: 'A',
+                    last_otp_sent_time: new Date(),
+                    fcm: '',
+                    guest:false
                 }
+                 console.log(insert_acct_data,"insert_acct_data:::");
+                 //return false
+                let a = await dbobj.db.collection('app_user_accounts').insertOne(insert_acct_data);
+                console.log(a);
+                // DEVICE LOG
+                let device_obj = {
+                    aid: aid,
+                    device_id: [device_id]
+                }
+                await dbobj.db.collection('app_user_devices_log').insertOne(device_obj);
 
-                await dbobj.db.collection('app_user_accounts').insertOne(insert_acct_data);
-                /* OTP MAIL */
-                //await UTILS.send_otp(email_id, otp);
+                    /* OTP MAIL */
+                    let email_data = {        // NEED TO UNCOMMAND
+                        email_id: email_id,
+                        otp: otp,
+                        type: "Register"
+                    }
+                    // UTILS.send_otp(email_data);
+             
                 var user_ownership = []
-                var nt_cars = await dbobj.db.collection('app_non_tradable_assets_master').find({}).project({ _id: 0 }).sort({ unit_id: 1 }).toArray()
-                for (let i = 0; i < nt_cars.length; i++) {
-                    var lf = new Date()
-                    lf.setHours(00, 00)
-                    nt_cars[i].gid = gid
-                    nt_cars[i].crd_on = new Date()
-                    nt_cars[i].nft_details.charge.l_f = lf
+                var nt_assets = await dbobj.db.collection('app_non_tradable_assets_master').find({ unit_id: 1 }).project({ _id: 0 }).sort({ unit_id: 1 }).toArray();
+                for (let i = 0; i < nt_assets.length; i++) {
+                    nt_assets[i].aid = aid
+                    nt_assets[i].crd_on = UTILS.CURRENT_DATE(new Date())
                     var last_selected = 'N';
-                    var ownership = 'YO'
-                    if (nt_cars[i].unit_id == 1) {
+                    var ownership = 'YO' 
+                    if (nt_assets[i].unit_id == 1) {
                         last_selected = 'Y';
                         ownership = 'O'
                     }
                     user_ownership.push({
-                        gid: gid,
-                        unit_id: nt_cars[i].unit_id,
-                        unit_type: nt_cars[i].unit_type,
-                        car_type: nt_cars[i].car_type,
+                        aid: aid,
+                        unit_id: nt_assets[i].unit_id,
+                        unit_type: nt_assets[i].unit_type,
                         last_selected: last_selected,
                         ownership: ownership,
-                        crd_on: new Date(),
+                        crd_on: UTILS.CURRENT_DATE(new Date()),
                         status: 'A',
                     })
                 }
-                await dbobj.db.collection('app_nft_ownership').insertMany(user_ownership)
-                await dbobj.db.collection('app_non_tradable_assets').insertMany(nt_cars)
-                UTILS.transaction_log(CONFIG.TRANSACTION_LOG, dbobj, { registration_reward: 10000 }, { gid: gid })
+                await dbobj.db.collection('app_asset_ownership').insertMany(user_ownership)
+                await dbobj.db.collection('app_non_tradable_assets').insertMany(nt_assets)
+                // UTILS.transaction_log(CONFIG.TRANSACTION_LOG, dbobj, { registration_reward: 8000 }, { aid: aid })
+                // UTILS.rc_transaction_log(aid, "INSTALATION_BONUS", 8000, "CREDIT", dbobj);
+                await guardianobj.reward_coins(8000, aid, dbobj);
 
-                // await DEV_UTILS.update_units(gid, 1000, dbobj)
-                await guardianobj.reward_ut(10000, gid, dbobj);
                 response_code = 1;
                 msg = CONFIG.MESSAGES.OTP_SENT;
             }
-        }
+
             /* BUILD RESPONSE */
             response = {
-                "status": "S",
-                "response_code": 1,
-                "msg": "OTP Sent Succesfully",
-                "otp_expiry": 30,
-                "otp_retry": 3,
-                "app_config": {
-                  "f_u": "N",
-                  "m": "N",
-                  "i_d": "N",
-                  "m_t": 0
-                }
-              }
-        
+                status: status,
+                response_code: response_code,
+                msg: msg,
+                otp_expiry: CONFIG.OTP_RESEND_DURATION,
+                otp_retry: CONFIG.OTP_RETRY,
+                app_config:{
+                    f_u: "N",
+                    m: "N",
+                    i_d: "N",
+                    m_t: 0,
+                  }
+            };
+        }
         /* LOGGER */
         logger.log({
             level: 'info',
@@ -145,6 +175,7 @@ router.post('/', async (req, res) => {
         });
 
         /* OUTPUT */
+        console.log(response);
         res.send(response);
     }
     catch (err) {
@@ -158,10 +189,8 @@ router.post('/', async (req, res) => {
         res.send(response);
     }
     finally {
-        //await dbobj.dbclose();
+        await dbobj.dbclose();
     }
 })
 module.exports = router;
 /* MAIN SCRIPT ENDS */
-
-

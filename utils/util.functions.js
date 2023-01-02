@@ -19,11 +19,27 @@ function get_app_config() {
     return app_config;
 }
 
+function check_swear_word(word) {
+    var response = false;
+    var arr = ["ahole", "anus", "ash0le", "ash0les", "asholes", "ass", "Ass Monkey", "Assface", "assh0le", "assh0lez", "asshole", "assholes", "assholz", "asswipe", "azzhole", "bassterds", "bastard", "bastards", "bastardz", "basterds", "basterdz", "Biatch", "bitch", "bitches", "Blow Job", "boffing", "butthole", "buttwipe", "c0ck", "c0cks", "c0k", "Carpet Muncher", "cawk", "cawks", "Clit", "cnts", "cntz", "cock", "cockhead", "cock-head", "cocks", "CockSucker", "cock-sucker", "crap", "cum", "cunt", "cunts", "cuntz", "dick", "dild0", "dild0s", "dildo", "dildos", "dilld0", "dilld0s", "dominatricks", "dominatrics", "dominatrix", "dyke", "enema", "f u c k", "f u c k e r", "fag", "fag1t", "faget", "fagg1t", "faggit", "faggot", "fagg0t", "fagit", "fags", "fagz", "faig", "faigs", "fart", "flipping the bird", "Fuck", "fuck", "fucker", "fuckin", "fucking", "fucks", "Fudge Packer", "fuk", "Fukah", "Fuken", "fuker", "Fukin", "Fukk", "Fukkah", "Fukken", "Fukker", "Fukkin", "g00k", "God-damned", "h00r", "h0ar", "h0re", "hells", "hoar", "hoor", "hoore", "jackoff", "jap", "japs", "jerk-off", "jisim", "jiss", "jizm", "jizz", "knob", "knobs", "knobz", "kunt", "kunts", "kuntz", "Lezzian", "Lipshits", "Lipshitz", "masochist", "masokist", "massterbait", "masstrbait", "masstrbate", "masterbaiter", "masterbate", "masterbates", "Motha Fucker", "Motha Fuker", "Motha Fukkah", "Motha Fukker", "Mother Fucker", "Mother Fukah", "Mother Fuker", "Mother Fukkah", "Mother Fukker", "mother-fucker", "Mutha Fucker", "Mutha Fukah", "Mutha Fuker", "Mutha Fukkah", "Mutha Fukker", "n1gr", "nastt", "nigger;", "nigur;", "niiger;", "niigr;", "orafis", "orgasim;", "orgasm", "orgasum", "oriface", "orifice", "orifiss", "packi", "packie", "packy", "paki", "pakie", "paky", "pecker", "peeenus", "peeenusss", "peenus", "peinus", "pen1s", "penas", "penis", "penis-breath", "penus", "penuus", "Phuc", "Phuck", "Phuk", "Phuker", "Phukker", "polac", "polack", "polak", "Poonani", "pr1c", "pr1ck", "pr1k", "pusse", "pussee", "pussy", "puuke", "puuker", "qweir", "recktum", "rectum", "retard", "sadist", "scank", "schlong", "screwing", "semen", "sex", "sexy", "Sh!t", "sh1t", "sh1ter", "sh1ts", "sh1tter", "sh1tz", "shit", "shits", "shitter", "Shitty", "Shity", "shitz", "Shyt", "Shyte", "Shytty", "Shyty", "skanck", "skank", "skankee", "skankey", "skanks", "Skanky", "slag", "slut", "sluts", "Slutty", "slutz", "son-of-a-bitch", "tit", "turd", "va1jina", "vag1na", "vagiina", "vagina", "vaj1na", "vajina", "vullva", "vulva", "w0p", "wh00r", "wh0re", "whore", "xrated", "xxx", "b!+ch", "bitch", "blowjob", "clit", "arschloch", "fuck", "shit", "ass", "asshole", "b!tch", "b17ch", "b1tch", "bastard", "bi+ch", "boiolas", "buceta", "c0ck", "cawk", "chink", "cipa", "clits", "cock", "cum", "cunt", "dildo", "dirsa", "ejakulate", "fatass", "fcuk", "fuk", "fux0r", "hoer", "hore", "jism", "kawk", "l3itch", "l3i+ch", "masturbate", "masterbat*", "masterbat3", "motherfucker", "s.o.b.", "mofo", "nazi", "nigga", "nigger", "nutsack", "phuck", "pimpis", "pusse", "pussy", "scrotum", "sh!t", "shemale", "shi+", "sh!+", "slut", "smut", "teets", "tits", "boobs", "b00bs", "teez", "testical", "testicle", "titt", "w00se", "jackoff", "wank", "whoar", "whore", "*damn", "*dyke", "*fuck*", "*shit*", "@$$", "amcik", "andskota", "arse*", "assrammer", "ayir", "bi7ch", "bitch*", "bollock*", "breasts", "butt-pirate", "cabron", "cazzo", "chraa", "chuj", "Cock*", "cunt*", "d4mn", "daygo", "dego", "dick*", "dike*", "dupa", "dziwka", "ejackulate", "Ekrem*", "Ekto", "enculer", "faen", "fag*", "fanculo", "fanny", "feces", "feg", "Felcher", "ficken", "fitt*", "Flikker", "foreskin", "Fotze", "Fu(*", "fuk*", "futkretzn", "gook", "guiena", "h0r", "h4x0r", "hell", "helvete", "hoer*", "honkey", "Huevon", "hui", "injun", "jizz", "kanker*", "kike", "klootzak", "kraut", "knulle", "kuk", "kuksuger", "Kurac", "kurwa", "kusi*", "kyrpa*", "lesbo", "mamhoon", "masturbat*", "merd*", "mibun", "monkleigh", "mouliewop", "muie", "mulkku", "muschi", "nazis", "nepesaurio", "nigger*", "orospu", "paska*", "perse", "picka", "pierdol*", "pillu*", "pimmel", "piss*", "pizda", "poontsee", "poop", "porn", "p0rn", "pr0n", "preteen", "pula", "pule", "puta", "puto", "qahbeh", "queef*", "rautenberg", "schaffer", "scheiss*", "schlampe", "schmuck", "screw", "sh!t*", "sharmuta", "sharmute", "shipal", "shiz", "skribz", "skurwysyn", "sphencter", "spic", "spierdalaj", "splooge", "suka", "b00b*", "testicle*", "titt*", "twat", "vittu", "wank*", "wetback*", "wichser", "wop*", "yed", "zabourah"]
+    var result = arr.filter(element => element.includes((word.toLowerCase())));
+
+    if (result.length > 0) {
+        response = true;
+    }
+
+    return response;
+}
+
 function log_file(req, res) {
     fs.appendFile(`request_response.txt`, '\n\nrequest::: ' + req + '\n\n' + 'response:::: ' + res, function (err) {
         if (err) throw err;
         //console.log('logged request response');
     });
+}
+function CURRENT_DATE(date) {
+    //return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+    return date
 }
 
 
@@ -334,7 +350,7 @@ function generate_otp() {
     return Math.floor(Math.random() * (maxm - minm + 1)) + minm;
 }
 
-function generate_gid(length) {
+function generate_aid(length) {
     const str_result = 'ABCDEFGHJKLMNPQRSTUVWXYZ1234567890zxcvbnmasdfghjklqwertyuiop';
     var gid = '';
     for (let i = 0; i < length; i++) {
@@ -343,10 +359,11 @@ function generate_gid(length) {
     return gid
 }
 
-async function create_gid(dbobj) {
+async function create_aid(dbobj) {
+    console.log("logging:::::");
     let condition = true
     while (condition) {
-        var gid = generate_gid(16);
+        var gid = generate_aid(16);
         var find_gid = await dbobj.db.collection('app_user_accounts').find({ gid: gid }).toArray();
         if (find_gid.length != 0) {
             condition = true
@@ -376,6 +393,118 @@ async function transaction_log(is_log, dbobj) {
     }
 }
 
+async function create_event(dbobj, event_type, mode) {
+	let query_parameter = {};
+	let event_id = 1;
+	if (event_type === 'HOURLY') {
+		/* CREATING CURRENT DATE OBJECT */
+		let start = new Date();
+		let end = new Date();
+
+		/* SET HOURS TO START AND END LIMIT */
+		start.setUTCMinutes(0, 0, 0);
+		end.setUTCMinutes(59, 59, 999);
+
+		/* GETTING EVENT VALUE BY START HOUR AND END HOUR */
+		query_parameter = { start_date: start, end_date: end };
+
+	}
+	else if (event_type === 'DAILY') {
+		/* CREATING CURRENT DATE OBJECT */
+		let start = new Date();
+		let end = new Date();
+
+		/* SET HOURS TO START AND END LIMIT */
+		start.setUTCHours(0, 0, 0, 0);
+		end.setUTCHours(23, 59, 59, 999);
+
+
+		query_parameter = { start_date: start, end_date: end };
+	}
+	else if (event_type === 'WEEKLY') {
+		/* CREATING CURRENT DATE OBJECT */
+		let start = new Date();
+		let end = new Date();
+
+		/* SET HOURS TO START AND END LIMIT */
+		start.setHours(0, 0, 0, 0);
+		end.setHours(23, 59, 59, 999);
+
+		query_parameter = { start_date: start_of_week(start), end_date: end_of_week(end) };
+	}
+	else {
+		return 'Invalid Event Type';
+	}
+	query_parameter.mode = mode;
+
+	console.log(query_parameter);
+	let get_exist_event = await dbobj.db.collection('app_rank_master').find(query_parameter).limit(1).toArray();
+console.log(get_exist_event);
+// return false
+
+	if (get_exist_event.length > 0) {
+		event_id = get_exist_event[0].event_id;
+		/* EVENT ALREADY EXIST FOR DURATION */
+	}
+	else {
+
+		/* EVENT DOESN'T EXIST NEED TO CREATE ONE */
+		event_id = 1;
+		/* GET LAST EVENT ID FROM DB COLLECTION */
+
+		let get_last_event = await dbobj.db.collection('app_rank_master').find({ mode: mode }).sort({ _id: -1 }).limit(1).toArray();
+
+		(get_last_event.length > 0) ? event_id = get_last_event[0].event_id + 1 : event_id = event_id;
+
+		let insert_data = {
+			event_id: event_id,
+			group_id: event_type,
+			mode: mode,
+			event_name: format_date(query_parameter.start_date, event_type),
+			start_date: query_parameter.start_date,
+			end_date: query_parameter.end_date,
+			crd_on: new Date(),
+			stat: 'A'
+		};
+
+		/* INSERTING NEW EVENT DATA */
+		 await dbobj.db.collection('app_rank_master').insertOne(insert_data);
+		console.log(insert_data);
+	}
+	console.log(event_id);
+	return event_id;
+}
+
+
+function format_date(date, event_type) {
+	let formated_string = 'CURRENT EVENT';
+	if (event_type == 'DAILY') {
+		let month_name = date.toLocaleString('default', { month: 'long' });  // Get Month full Name..
+		let day = String(date.getUTCDate()).padStart(2, "0");   // Date Starts with 0
+		formated_string = month_name + "-" + day + "-" + (date.getUTCFullYear());
+	}
+	else if (event_type === 'HOURLY') {
+		let hours = date.getUTCHours();
+		let minutes = date.getUTCMinutes();
+		let ampm = hours >= 12 ? 'PM' : 'AM';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		formated_string = (date.getUTCDate()) + "-" + (date.getMonth() + 1) + "-" + (date.getUTCFullYear()) + ' ' + hours + ':' + minutes + '' + ampm;
+	}
+	return formated_string;
+}
+
+function start_of_week(date) {
+	let diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
+	return new Date(date.setDate(diff));
+}
+
+function end_of_week(date) {
+	let diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 7);
+	return new Date(date.setDate(diff));
+
+}
 module.exports = {
     get_remaining_seconds,
     get_app_config,
@@ -389,11 +518,15 @@ module.exports = {
     log_file,
     format_inbox_date,
     map_data,
-    create_gid,
+    create_aid,
     generate_otp,
     send_otp,
     get_remaining_hours,
     convert_maintanance_time,
     car_animation,
-    transaction_log
+    transaction_log,
+    CURRENT_DATE,
+    check_swear_word,
+    create_event
+   
 }

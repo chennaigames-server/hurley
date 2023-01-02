@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const CONFIG = require('../../common/inc.config');
-const UTILS = require('../../utils/util.functions');
+const CONFIG = require('../../../common/inc.config');
+const UTILS = require('../../../utils/util.functions');
 
 /* MAIN SCRIPT STARTS */
 router.post('/', async (req, res) => {
 
     /* LOGGER MODULE */
-    var loggerobj = require('../../classes/class.logger');
+    var loggerobj = require('../../../classes/class.logger');
     let winston = new loggerobj(__filename);
     let logger = winston.logger();
 

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const CONFIG = require('../../common/inc.config');
 const UTILS = require('../../utils/util.functions');
+
 /* MAIN SCRIPT STARTS */
 router.post('/', async (req, res) => {
 
@@ -18,33 +19,27 @@ router.post('/', async (req, res) => {
     var app_config = UTILS.get_app_config();
 
     /* DATABASE REFERENCE */
-    // var dbconn = require('../../common/inc.dbconn');
-    // var dbobj = new dbconn();
+    var dbconn = require('../../common/inc.dbconn');
+    var dbobj = new dbconn();
 
     try {
         /* REQUEST PARAMETERS */
         var data = req.body;
-        var gid = data.gid;
+        var aid = data.aid;
 
         /* LOGOUT FROM GAME DATABASE ALSO */
-        var query_parameter = { gid: gid };
+        var query_parameter = { aid: aid };
         var update_parameter = { $set: { logout: 'Y' } };
         await dbobj.db.collection('app_user_accounts').updateOne(query_parameter, update_parameter);
         response_code = 1;
         msg = CONFIG.MESSAGES.LOGOUT;
 
-       
         response = {
-            "status": "S",
-            "msg": "Logout Successfully!",
-            "response_code":1,
-            "app_config": {
-              "f_u": "N",
-              "m": "N",
-              "i_d": "N",
-              "m_t": 0
-            }
-          }
+            status: status,
+            msg: msg,
+            response_code: response_code,
+            app_config: app_config
+        }
 
         /* LOGGER */
         logger.log({
@@ -67,7 +62,7 @@ router.post('/', async (req, res) => {
         res.send(response);
     }
     finally {
-        //await dbobj.dbclose();
+        await dbobj.dbclose();
     }
 })
 module.exports = router;

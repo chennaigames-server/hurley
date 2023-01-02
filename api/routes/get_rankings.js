@@ -24,15 +24,24 @@ router.post("/", async (req, res) => {
         var data = req.body;
         let aid = data.aid;
         let lb_id = data.lb_id;
+        let lb_type = data.lb_type;
         let event_id = 0;
         let collection_name = "";
         let lb = {};
         let winners = [];
         let exist_in_top10 = true;
+        let type = "";
 
-        if (lb_id == 0) event_id = await UTILS.create_event(dbobj, "DAILY", 1);
+        if(lb_type) type = lb_type;
+        else type = "DAILY";
+
+         
+
+
+        if (lb_id == 0) event_id = await UTILS.create_event(dbobj,type,1),console.log(event_id,"event_id");
         else event_id = lb_id;
 
+        //   return false
         collection_name = "app_lb_" + event_id + "_event_1";
         console.log(collection_name);
         let event_details = await dbobj.db.collection("app_rank_master").findOne({event_id:event_id});

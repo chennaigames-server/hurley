@@ -40,33 +40,40 @@ router.post('/', async (req, res) => {
             let repair_cost = await dbobj.db.collection("app_repair_board_master").findOne(query, project);
             console.log(repair_cost, "rccc");
 
-            let deduct_query = { aid: aid };
-            let deduct_update = { $inc: { coin_balance: -repair_cost.repair_cost } };
-            let deduct = await dbobj.db.collection("app_coins").updateOne(deduct_query, deduct_update);
-            console.log(deduct);
+            let c_coins = await dbobj.db.collection("app_coins").findOne({ aid: aid })
+            if (c_coins >= repair_cost) {
+                let deduct_query = { aid: aid };
+                let deduct_update = { $inc: { coin_balance: -repair_cost.repair_cost } };
+                let deduct = await dbobj.db.collection("app_coins").updateOne(deduct_query, deduct_update);
+                console.log(deduct);
 
-            let reduct_update = { $set: { 'attr.damage': 0, repair_cost: 0 } };
-            let reduct = await dbobj.db.collection(collection_name).updateOne(query_parameter, reduct_update);
-            console.log(reduct);
+                let reduct_update = { $set: { 'attr.damage': 0, repair_cost: 0 } };
+                let reduct = await dbobj.db.collection(collection_name).updateOne(query_parameter, reduct_update);
+                console.log(reduct);
 
-            /* BUILD RESPONSE */
-            response.status = status;
-            response.msg = "SUCCESS";
+                /* BUILD RESPONSE */
+                response.status = status;
+                response.msg = "SUCCESS";
+            }
+            else {
+                /* BUILD RESPONSE */
+                response.status = "E";
+                response.msg = "INSUFFICIENT_BALANCE";
+            }
             response.app_config = app_config;
-
         }
         else {
             response = UTILS.error();
         }
 
         /* LOGGER */
-        logger.log({ level: 'info',type: 'Response',message: response });
+        logger.log({ level: 'info', type: 'Response', message: response });
         /* OUTPUT */
         res.send(response);
     }
     catch (err) {
         /* LOGGER */
-        logger.log({ level: 'error',message: err });
+        logger.log({ level: 'error', message: err });
         res.send(UTILS.error())
     }
     finally {

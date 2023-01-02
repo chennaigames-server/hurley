@@ -37,22 +37,37 @@ router.post('/', async (req, res) => {
                 "i_d": "N",
                 "m_t": 0
             },
-            "upgrades": [
+            "missions": [
                 {
-                    "type": 1,
-                    "upgr_cost": 1000,
-                    "c_level": 1,
-                    "t_level": 10,
-                    "p_percent": 10,
+                    "id": 1,
+                    "type":1,
+                    "mission": "COLLECT 450 COINS IN SINGLE RACE",
+                    "coin_bonus": 250,
+                    "c_progress": 225,
+                    "t_progress": 450,
+                    "p_percent": 50,
                     "btn_status": 1,
                     "trans_id": ""
                 },
                 {
-                    "type": 2,
-                    "upgr_cost": 1000,
-                    "c_level": 1,
-                    "t_level": 10,
-                    "p_percent": 10,
+                    "id": 2,
+                    "type":2,
+                    "mission": "AVOID 20 OBSTACLES IN SINGLE SURF",
+                    "coin_bonus": 250,
+                    "c_progress": 10,
+                    "t_progress": 20,
+                    "p_percent": 50,
+                    "btn_status": 1,
+                    "trans_id": ""
+                },
+                {
+                    "id": 1,
+                    "type":1,
+                    "mission": "COLLECT 450 COINS IN SINGLE RACE",
+                    "coin_bonus": 250,
+                    "c_progress": 225,
+                    "t_progress": 450,
+                    "p_percent": 50,
                     "btn_status": 1,
                     "trans_id": ""
                 }

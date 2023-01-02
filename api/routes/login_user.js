@@ -19,31 +19,44 @@ router.post('/', async (req, res) => {
     var app_config = UTILS.get_app_config();
 
     /* DATABASE REFERENCE */
-    // var dbconn = require('../../common/inc.dbconn');
-    // var dbobj = new dbconn();
+    var dbconn = require('../../common/inc.dbconn');
+    var dbobj = new dbconn();
 
     try {
         /* REQUEST PARAMETERS */
         var data = req.body;
         var email_id = data.email_id;
-
+        console.log(data);
         if (email_id != '' && data.hasOwnProperty('email_id')) {
-            var query_parameter = { email_id: data.email_id };
-            var projection_parameter = { _id: 1, validated: 1 };
+
+            var query_parameter = { email_id: email_id };
+            var projection_parameter = { _id: 1, validated: 1, last_otp_sent_time: 1 };
             var exist_in_gamedb = await dbobj.db.collection('app_user_accounts').find(query_parameter).project(projection_parameter).limit(1).toArray();
+            console.log(exist_in_gamedb);
+            // return
+
             if (exist_in_gamedb.length == 0) {
                 /* REGISTRATION INCOMPLETE USER */
+                let no_obj = {
+                    email_id: data.email_id,
+                    crd_on: new Date()
+                }
+                await dbobj.db.collection('app_account_not_exist').insertOne(no_obj)
                 response_code = 0;
                 msg = CONFIG.MESSAGES.NO_ACCOUNT;
             }
             else {
                 if (exist_in_gamedb[0].validated == 1) {
-                    var otp = UTILS.generate_otp();
-                    var query_parameter = { email_id: email_id };
-                    var update_parameter = { $set: { otp: otp } };
-                    await dbobj.db.collection('app_user_accounts').updateOne(query_parameter, update_parameter);
-                    //await UTILS.send_otp(email_id, otp);
-
+                    let otp_expiry_time = (new Date().getTime() - new Date(exist_in_gamedb[0].last_otp_sent_time).getTime()) / 1000;
+                    if (otp_expiry_time > 60) {
+                        var otp = UTILS.generate_otp();
+                        var query_parameter = { email_id: email_id };
+                        var update_parameter = { $set: { otp: otp, last_otp_sent_time: new Date() } };
+                        await dbobj.db.collection('app_user_accounts').updateOne(query_parameter, update_parameter);
+                     
+                            //UTILS.send_otp(email_data);
+ 
+                    }
                     response_code = 1;
                     msg = CONFIG.MESSAGES.OTP_SENT;
                 }
@@ -55,19 +68,19 @@ router.post('/', async (req, res) => {
 
             /* BUILD RESPONSE */
             response = {
-                "status": "S",
-                "response_code": 1,
-                "msg": "OTP Sent Succesfully",
-                "otp_expiry": 30,
-                "otp_retry": 3,
-                "app_config": {
-                  "f_u": "N",
-                  "m": "N",
-                  "i_d": "N",
-                  "m_t": 0
+                status: status,
+                response_code: response_code,
+                msg: msg,
+                otp_expiry: CONFIG.OTP_RESEND_DURATION,
+                otp_retry: CONFIG.OTP_RETRY,
+                app_config: {
+                    "f_u": "N",
+                    "m": "N",
+                    "i_d": "N",
+                    "m_t": 0
                 }
-              };
-            }
+            };
+        }
 
         /* LOGGER */
         logger.log({
@@ -91,7 +104,7 @@ router.post('/', async (req, res) => {
         res.send(response);
     }
     finally {
-        //await dbobj.dbclose();
+        await dbobj.dbclose();
     }
 })
 module.exports = router;

@@ -41,13 +41,17 @@ router.post('/', async (req, res) => {
                 let deduct_update = { $inc: { coin_balance: -upgr_cost[0].coins } };
                 let deduct = await dbobj.db.collection("app_coins").updateOne(deduct_query, deduct_update);
                 console.log(deduct, "deduct");
+                let lvl_inc = ((powerup_details.details.upgr[upgr_id - 1].c_level) + 1);
+                let p_p = (lvl_inc/powerup_details.details.upgr[upgr_id - 1].t_level)*100;
 
-                let improve = await dbobj.db.collection("app_user_profile_details").updateOne({ aid: aid, 'details.upgr.id': upgr_id }, { $inc: { 'details.upgr.$.c_level': 1 },$set:{'details.upgr.$.p_percent': (((powerup_details.details.upgr[upgr_id - 1].c_level) + 1)/powerup_details.details.upgr[upgr_id - 1].t_level)*100,'details.upgr.$.upgr_cost':upgr_cost[1].coins } });
+                let improve = await dbobj.db.collection("app_user_profile_details").updateOne({ aid: aid, 'details.upgr.id': upgr_id }, {$set:{'details.upgr.$.c_level':lvl_inc,'details.upgr.$.p_percent': p_p,'details.upgr.$.upgr_cost':upgr_cost[1].coins } });
                 console.log(improve, "improve");
 
                 response.status = status;
                 response.msg = "SUCCESS";
                 response.upgr_cost = upgr_cost[1].coins;
+                response.p_p = p_p;
+                response.c_level = lvl_inc;
             }
             else {
                 response.status = "E"

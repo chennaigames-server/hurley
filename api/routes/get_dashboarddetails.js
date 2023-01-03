@@ -49,13 +49,10 @@ router.post("/", async (req, res) => {
       let coins_value = await dbobj.db.collection("app_coins").findOne(query_parameter);
       if (coins_value) coins = coins_value.coin_balance;
 
-
-
       player_details.nickname = nick_name;
       player_details.coin_balance = coins;
       player_details.char_details = char_details;
 
-      
       response.status = "S";
       response.msg = "SUCCESS";
       response.app_config = {
@@ -64,6 +61,7 @@ router.post("/", async (req, res) => {
         i_d: "N",
         m_t: 0,
       };
+
       response.player_details = player_details;
       response.referral_details = referral_details;
       response.upgr = upgr;

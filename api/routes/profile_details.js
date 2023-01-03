@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
                             "gender": 0,
                             "b_id": "1",
                             "c_id": "1",
-                            "avatar": "1",
+                            "avatar_id": "1",
                             "xp_level": 1,
                             "c_xp": 10,
                             "t_xp": 500,

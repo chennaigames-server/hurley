@@ -19,8 +19,10 @@ var dbobj = new dbconn();
 
 for (let index = 0; index < CHARACTER_COUNT; index++)
 {
-    var insert_parameter = generate_random_character(1);
+    var insert_parameter = await generate_random_character(1);
     console.log(insert_parameter);
+    await dbobj.db.collection("app_tradable_assets_master").insertOne(insert_parameter)
+
 }
 
 await dbobj.dbclose();
@@ -28,8 +30,7 @@ await dbobj.dbclose();
 .catch(err => console.error(err));
 
 
-
-function generate_random_character(gender) {
+ function generate_random_character(gender) {
     var character = {
         gender: gender,
         board: get_combination(board_attachment),
@@ -54,7 +55,6 @@ function generate_random_character(gender) {
         },
         animations:[1,2,3],
     };
-
     return character;
 }
 

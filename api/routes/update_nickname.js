@@ -45,7 +45,8 @@ router.post('/', async (req, res) => {
                         response = {
                             status: status,
                             msg: msg,
-                            app_config: app_config
+                            app_config: app_config,
+                            nick_name:nick_name
                         }
                     } else {
                         let next_days = (7-diff_value);

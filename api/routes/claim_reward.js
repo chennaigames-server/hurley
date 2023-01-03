@@ -30,16 +30,15 @@ router.post('/', async (req, res) => {
         /* BUILD RESPONSE */
         response = {
             "status": "S",
-            "response_code":1,
-            "coin_balance":500,
             "msg": "Success",
             "app_config": {
-              "f_u": "N",
-              "m": "N",
-              "i_d": "N",
-              "m_t": 0
+                "f_u": "N",
+                "m": "N",
+                "i_d": "N",
+                "m_t": 0
             }
-          }
+        }
+
 
         /* LOGGER */
         logger.log({

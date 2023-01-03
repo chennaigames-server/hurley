@@ -30,16 +30,50 @@ router.post('/', async (req, res) => {
         /* BUILD RESPONSE */
         response = {
             "status": "S",
-            "response_code": 1,
-            "coin_balance": 500,
-            "msg": "upgraded successfully",
+            "msg": "Success",
             "app_config": {
                 "f_u": "N",
                 "m": "N",
                 "i_d": "N",
-                "m_t": 3600
-            }
+                "m_t": 0
+            },
+            "missions": [
+                {
+                    "id": 1,
+                    "type":1,
+                    "mission": "COLLECT 450 COINS IN SINGLE RACE",
+                    "coin_bonus": 250,
+                    "c_progress": 225,
+                    "t_progress": 450,
+                    "p_percent": 50,
+                    "btn_status": 1,
+                    "trans_id": ""
+                },
+                {
+                    "id": 2,
+                    "type":2,
+                    "mission": "AVOID 20 OBSTACLES IN SINGLE SURF",
+                    "coin_bonus": 250,
+                    "c_progress": 10,
+                    "t_progress": 20,
+                    "p_percent": 50,
+                    "btn_status": 1,
+                    "trans_id": ""
+                },
+                {
+                    "id": 1,
+                    "type":1,
+                    "mission": "COLLECT 450 COINS IN SINGLE RACE",
+                    "coin_bonus": 250,
+                    "c_progress": 225,
+                    "t_progress": 450,
+                    "p_percent": 50,
+                    "btn_status": 1,
+                    "trans_id": ""
+                }
+            ]
         }
+
 
         /* LOGGER */
         logger.log({

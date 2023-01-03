@@ -25,9 +25,8 @@ router.post('/', async (req, res) => {
         /* REQUEST PARAMETERS */
         let data = req.body;
         let aid = data.aid;
-        let email_id = data.email_id;
-        let upgr_id = data.upgr_id;
-
+        let upgr_id = parseInt(data.u_id);
+        console.log(data,"data?:::::::::");
         let powerup_details = await dbobj.db.collection("app_user_profile_details").findOne({ aid: aid });
         console.log(powerup_details.details.upgr[upgr_id - 1].c_level);
 
@@ -48,6 +47,7 @@ router.post('/', async (req, res) => {
 
                 response.status = status;
                 response.msg = "SUCCESS";
+                response.upgr_cost = upgr_cost[1].coins;
             }
             else {
                 response.status = "E"
@@ -55,7 +55,6 @@ router.post('/', async (req, res) => {
             }
             response.app_config = { "f_u": "N", "m": "N", "i_d": "N", "m_t": 0 }
         }
-
         /* LOGGER */
         logger.log({ level: 'info', type: 'Response', message: response });
         /* OUTPUT */

@@ -28,14 +28,13 @@ router.post("/", async (req, res) => {
       /* BUILD RESPONSE */
       response = {
         "status": "S",
-        msg:"SUCCESS",
+        response_code:1,
         "app_config": {
           "f_u": "N",
           "m": "N",
           "i_d": "N",
           "m_t": 0
         },
-        
       }
     
     /* LOGGER */

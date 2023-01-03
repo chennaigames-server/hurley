@@ -19,27 +19,27 @@ router.post('/', async (req, res) => {
     var app_config = UTILS.get_app_config();
 
     /* DATABASE REFERENCE */
-    var dbconn = require('../../common/inc.dbconn');
-    var dbobj = new dbconn();
+    // var dbconn = require('../../common/inc.dbconn');
+    // var dbobj = new dbconn();
 
     try {
         /* REQUEST PARAMETERS */
         var data = req.body;
-        var aid = data.aid;
+        var email_id = data.email_id;
 
-        /* LOGOUT FROM GAME DATABASE ALSO */
-        var query_parameter = { aid: aid };
-        var update_parameter = { $set: { logout: 'Y' } };
-        await dbobj.db.collection('app_user_accounts').updateOne(query_parameter, update_parameter);
-        response_code = 1;
-        msg = CONFIG.MESSAGES.LOGOUT;
-
+        /* BUILD RESPONSE */
         response = {
-            status: status,
-            msg: msg,
-            response_code: response_code,
-            app_config: { "f_u": "N","m": "N","i_d": "N","m_t": 0 }
-        }
+            "status": "S",
+            "response_code": 1,
+            "msg":"NICKNAME UPDATE SUCCESSFUL",
+            "app_config": {
+              "f_u": "N",
+              "m": "N",
+              "i_d": "N",
+              "m_t": 0
+            }
+          }
+
 
         /* LOGGER */
         logger.log({
@@ -50,19 +50,20 @@ router.post('/', async (req, res) => {
 
         /* OUTPUT */
         res.send(response);
-
     }
     catch (err) {
+
         /* LOGGER */
         logger.log({
             level: 'error',
             message: err
         });
+
         var response = UTILS.error();
         res.send(response);
     }
     finally {
-        await dbobj.dbclose();
+        //await dbobj.dbclose();
     }
 })
 module.exports = router;

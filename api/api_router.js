@@ -33,7 +33,9 @@ class api_router {
         route.use('/set_character',require('./routes/set_character'));
 
         /* RANKING */
-        route.use('/get_rankings',require('./routes/get_rankings'));
+        // route.use('/get_rankings',require('./routes/get_rankings'));
+        route.use('/get_rankings',require('./routes/get_rankings_static'));
+
 
         /* UPGRADE */
         route.use('/upgrade_powerup',require('./routes/upgrade_powerup'));

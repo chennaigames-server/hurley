@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
             status: status,
             msg: msg,
             response_code: response_code,
-            app_config: { "f_u": "N","m": "N","i_d": "N","m_t": 0 }
+            app_config: app_config
         }
 
         /* LOGGER */

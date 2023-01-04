@@ -1,8 +1,5 @@
-
 const express = require('express');
 const router = express.Router();
-const CONFIG = require('../../common/inc.config');
-const UTILS = require('../../utils/util.functions');
 
 router.post('/', (req, res) => {
     try {
@@ -13,32 +10,19 @@ router.post('/', (req, res) => {
 
         /* RESPONSE */
         let response = {
-                "status": "S",
-                "msg": "Success",
-                "api_base_url": " ",
-                "app_config": {
-                    "f_u": "N",
-                    "m": "N",
-                    "i_d": "N",
-                    "m_t": 0
-                }
-            }
-      
+            "status": "S",
+            "msg": "Success",
+            "app_config":app_config
+        }
+
         /* OUTPUT */
-        logger.log({
-            level: 'info',
-            type: 'Response',
-            message: response
-        });
+        logger.log({ level: 'info', type: 'Response', message: response });
         console.log(response);
         res.send(response);
     }
     catch (err) {
         /* LOGGER */
-        logger.log({
-            level: 'error',
-            message: err
-        });
+        logger.log({ level: 'error', message: err });
     }
     finally {
     }

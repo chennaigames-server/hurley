@@ -55,12 +55,7 @@ router.post("/", async (req, res) => {
 
       response.status = "S";
       response.msg = "SUCCESS";
-      response.app_config = {
-        f_u: "N",
-        m: "N",
-        i_d: "N",
-        m_t: 0,
-      };
+      response.app_config = app_config;
 
       response.player_details = player_details;
       response.referral_details = referral_details;

@@ -8,7 +8,7 @@ module.exports = {
     FORCED_UPDATE: "N",
     MAINTANANCE_MODE: "N",
     // MAINTANANCE_TIME: 600,
-    MAINTANANCE_TIME: 'Nov 29, 2022 17:20:00',
+    MAINTANANCE_TIME: 3600,
     FORCED_UPDATE_URL: 'https://play.google.com/store/apps/details?id=com.raddx.metaverse',
 
     /* ADDRESSABLE URL */

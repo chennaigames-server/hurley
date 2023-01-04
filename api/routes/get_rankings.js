@@ -91,7 +91,7 @@ router.post("/", async (req, res) => {
             /* BUILD RESPONSE */
             response.status = status;
             response.msg = "SUCCESS";
-            response.app_config = { "f_u": "N","m": "N","i_d": "N","m_t": 0 }
+            response.app_config = app_config;
             response.lb = lb;
             response.winners = winners;
         }

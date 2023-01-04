@@ -178,12 +178,7 @@ router.post('/', async (req, res) => {
                     landing: {
                         type: 3
                     },
-                    app_config: {
-                        "f_u": "N",
-                        "m": "N",
-                        "i_d": "N",
-                        "m_t": 0
-                    }
+                    app_config: app_config
                 }
             }
             else {

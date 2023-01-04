@@ -21,7 +21,7 @@ for (let index = 0; index < CHARACTER_COUNT; index++)
 {
     var insert_parameter = await generate_random_character(1);
     console.log(insert_parameter);
-    await dbobj.db.collection("app_tradable_assets_master").insertOne(insert_parameter)
+    // await dbobj.db.collection("app_tradable_assets_master").insertOne(insert_parameter)
 
 }
 

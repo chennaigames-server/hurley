@@ -57,7 +57,7 @@ router.post('/', async (req, res) => {
                 response.status = "E"
                 response.msg = "INSUFFICIENT BALANCE"
             }
-            response.app_config = { "f_u": "N", "m": "N", "i_d": "N", "m_t": 0 }
+            response.app_config = app_config;
         }
         /* LOGGER */
         logger.log({ level: 'info', type: 'Response', message: response });

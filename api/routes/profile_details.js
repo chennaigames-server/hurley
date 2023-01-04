@@ -26,12 +26,7 @@ router.post('/', async (req, res) => {
                 response = {
                     "status": "S",
                     "msg": "Success",
-                    "app_config": {
-                        "f_u": "N",
-                        "m": "N",
-                        "i_d": "N",
-                        "m_t": 0
-                    },
+                    "app_config": app_config,
                     "owned_char":[1,2,3,4,5],
                     last_selected_index:1,
                     "player_Details": {

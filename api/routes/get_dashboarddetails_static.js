@@ -160,6 +160,7 @@ router.post("/", async (req, res) => {
             c_level: 1,
             t_level: 10,
             p_percent: 10,
+            
             btn_status: 1,
           },
         ], 

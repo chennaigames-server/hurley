@@ -17,6 +17,7 @@ router.post('/', async (req, res) => {
     var loggerobj = require('../../classes/class.logger');
     let winston = new loggerobj(__filename);
     let logger = winston.logger();
+    let xp_val = random_number(1,50);
 
     try {
 
@@ -26,24 +27,28 @@ router.post('/', async (req, res) => {
                 response = {
                     "status": "S",
                     "msg": "Success",
-                    "app_config": app_config,
-                    "owned_char":[1,2,3,4,5],
-                    last_selected_index:1,
+                    "app_config": {
+                        "f_u": "N",
+                        "m": "N",
+                        "i_d": "N",
+                        "m_t": 0
+                    },
+                    
                     "player_Details": {
-                        "coin_balance": 1000,
+                        "coin_balance": random_number(1,10000),
                         "nickname": "super_surfer",
                         "char_details": {
                             "gender": 0,
                             "b_id": "1",
                             "c_id": "1",
-                            "avatar_id": "1",
+                            "avatar": "1",
                             "xp_level": 1,
-                            "c_xp": 10,
+                            "c_xp": xp_val,
                             "t_xp": 500,
-                            "p_p": 70,
-                            "d_xp": "10/500 XP",
-                            "rarity": "common",
-                            "char_name": "supreme_sloth",
+                            "p_p": Math.round((xp_val/500)*100),
+                            "d_xp": xp_val+"/500 XP",
+                            "rarity": "RARE",
+                            "char_name": "sachin_sloth",
                             "asset_details": {
                                 gender: 2,
                                 board: 1,
@@ -60,14 +65,14 @@ router.post('/', async (req, res) => {
                                 ornament: 1,
                             },
                             "attr": {
-                                "agility": 10,
-                                "stamina": 20,
-                                "energy": 100,
-                                "durability": 10,
-                                "speed": 20,
-                                "damage": 0
+                                "agility": random_number(1,100),
+                                "stamina": random_number(1,100),
+                                "energy": random_number(1,100),
+                                "durability": random_number(1,100),
+                                "speed": random_number(1,100),
+                                "damage": random_number(1,50)
                             },
-                            "repair_cost": 50,
+                            "repair_cost": 500,
                             "animations": [
                                 1,
                                 2,
@@ -77,21 +82,17 @@ router.post('/', async (req, res) => {
         
                     }
                 }
+
         /* LOGGER */
-        logger.log({
-            level: 'info',
-            type: 'Response',
-            message: response
-        });
+        logger.log({ level: 'info',type: 'Response',message: response });
         /* OUTPUT */
+        console.log(response,"char_details:::");
         res.send(response);
     }
     catch (err) {
         /* LOGGER */
-        logger.log({
-            level: 'error',
-            message: err
-        });
+        logger.log({ level: 'error',message: err });
+        /* ERROR OUTPUT */
         res.send(UTILS.error())
     }
     finally {
@@ -101,3 +102,8 @@ router.post('/', async (req, res) => {
 
 module.exports = router;
 /* MAIN SCRIPT ENDS */
+
+function random_number(min, max) {
+	let number = Math.floor(Math.random() * (max - min + 1)) + min;
+	return number;
+}

@@ -175,12 +175,7 @@ router.post('/', async (req, res) => {
                     od_login: od_login,
                     r_bonus: 5000,
                     token: token,
-                    app_config: {
-                        "f_u": "N",
-                        "m": "N",
-                        "i_d": "N",
-                        "m_t": 0
-                    },
+                    app_config: app_config,
                     game_tips: game_tips
                 }
             }

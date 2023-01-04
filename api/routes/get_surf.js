@@ -34,12 +34,8 @@ router.post('/', async (req, res) => {
             "response_code": 1,
             "game_token" :"8das7fy78adsf",
             "msg": "successfully",
-            "app_config": {
-              "f_u": "N",
-              "m": "N",
-              "i_d": "N",
-              "m_t": 0
-            },  "missions": [
+            "app_config": app_config,
+              "missions": [
               {
                 "id": 1,
                 " ": 1,

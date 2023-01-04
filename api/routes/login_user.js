@@ -73,12 +73,7 @@ router.post('/', async (req, res) => {
                 msg: msg,
                 otp_expiry: CONFIG.OTP_RESEND_DURATION,
                 otp_retry: CONFIG.OTP_RETRY,
-                app_config: {
-                    "f_u": "N",
-                    "m": "N",
-                    "i_d": "N",
-                    "m_t": 0
-                }
+                app_config: app_config
             };
         }
 

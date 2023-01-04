@@ -168,12 +168,7 @@ router.post('/', async (req, res) => {
                 status: status,
                 response_code: response_code,
                 msg: 'SUCCESS',
-                app_config: {
-                    "f_u": "N",
-                    "m": "N",
-                    "i_d": "N",
-                    "m_t": 0
-                },
+                app_config: app_config,
                 game_tips: game_tips,
                 cs_name_screen: cs_name_screen,
                 token: token,

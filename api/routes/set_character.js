@@ -48,8 +48,6 @@ router.post('/', async (req, res) => {
 
         /* LOGGER */
         logger.log({ level: 'info', type: 'Response', message: response });
-
-
         /* OUTPUT */
         console.log(response, "set character");
         res.send(response);

@@ -39,8 +39,9 @@ router.post("/", async (req, res) => {
         let query_parameter = { aid: aid, unit_id: last_selected_unit.unit_id };
         if (last_selected_unit.unit_type === 1) collection_name = "app_non_tradable_assets";
         if (last_selected_unit.unit_type === 2) collection_name = "app_tradable_assets_master";
-        let char = await dbobj.db.collection(collection_name).findOne(query_parameter);
-        char_details = char;
+        let options = {projection:{_id:0,crd_on:0,stat:0,aid:0}}
+        let char = await dbobj.db.collection(collection_name).findOne(query_parameter,options);
+        if(char) char_details = char;
       }
 
       let share_details = await dbobj.db.collection("app_referral_code_master").findOne(query_parameter);
@@ -50,14 +51,13 @@ router.post("/", async (req, res) => {
       if (coins_value) coins = coins_value.coin_balance;
 
       player_details.nickname = nick_name;
-      player_details.coin_balance = coins;
-      player_details.char_details = char_details;
 
       response.status = "S";
       response.msg = "SUCCESS";
       response.app_config = app_config;
-
+      response.coin_balance = coins;
       response.player_details = player_details;
+      response.char_details =  char_details;
       response.referral_details = referral_details;
       response.upgr = upgr;
       response.settings = {
@@ -82,7 +82,7 @@ router.post("/", async (req, res) => {
     res.send(UTILS.error());
   }
   finally {
-    // await dbobj.dbclose();
+     await dbobj.dbclose();
   }
 });
 module.exports = router;

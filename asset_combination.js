@@ -10,19 +10,19 @@ var leg_attachment = [1];
 var claws_attachment = [1];
 var ornaments_attachment = [1];
 var board_attachment = [1];
+var rarity = ["rare","common","legendary","epic"]
 var gender = [1, 2]; // 1-Male, 2-Female
-var CHARACTER_COUNT = 100;
-
+var CHARACTER_COUNT = 200;
+ 
 (async () => {
 var dbconn = require('./common/inc.dbconn');
 var dbobj = new dbconn();
 
-for (let index = 0; index < CHARACTER_COUNT; index++)
+for (let index = 101; index <= CHARACTER_COUNT; index++)
 {
-    var insert_parameter = await generate_random_character(1);
+    var insert_parameter = generate_random_character(2,index);
     console.log(insert_parameter);
-    // await dbobj.db.collection("app_tradable_assets_master").insertOne(insert_parameter)
-
+    await dbobj.db.collection("app_tradable_assets_master").insertOne(insert_parameter)
 }
 
 await dbobj.dbclose();
@@ -30,9 +30,18 @@ await dbobj.dbclose();
 .catch(err => console.error(err));
 
 
- function generate_random_character(gender) {
+ function generate_random_character(gender,index) {
     var character = {
-        gender: gender,
+        unit_type:2,
+        unit_id:index,
+        gender:gender,
+        xp_level:1,
+        c_xp:50,
+        t_xp:500,
+        p_p:10,
+        d_xp:"50/500XP",
+        rarity:get_combination(rarity),
+        char_name:"sloth_"+index,
         board: get_combination(board_attachment),
         top_dress: get_combination(topdress_attachment),
         bottom_dress: get_combination(bottomdress_attachment),
@@ -53,7 +62,10 @@ await dbobj.dbclose();
             speed:0,
             damage:0
         },
+        repair_cost:0,
         animations:[1,2,3],
+        crd_on:new Date(),
+        stat:"A"
     };
     return character;
 }

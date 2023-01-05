@@ -20,11 +20,9 @@ var dbobj = new dbconn();
 
 for (let index = 101; index <= CHARACTER_COUNT; index++)
 {
-    var insert_parameter = await generate_random_character(2,index);
-
+    var insert_parameter = generate_random_character(2,index);
     console.log(insert_parameter);
-     await dbobj.db.collection("app_tradable_assets_master").insertOne(insert_parameter)
-
+    await dbobj.db.collection("app_tradable_assets_master").insertOne(insert_parameter)
 }
 
 await dbobj.dbclose();
@@ -37,18 +35,13 @@ await dbobj.dbclose();
         unit_type:2,
         unit_id:index,
         gender:gender,
-        avatar_id:index,
-        b_id:index,
-        c_id:index,
         xp_level:1,
         c_xp:50,
         t_xp:500,
-        p_p:1,
+        p_p:10,
         d_xp:"50/500XP",
         rarity:get_combination(rarity),
         char_name:"sloth_"+index,
-        asset_details:{
-        gender: gender,
         board: get_combination(board_attachment),
         top_dress: get_combination(topdress_attachment),
         bottom_dress: get_combination(bottomdress_attachment),
@@ -61,7 +54,6 @@ await dbobj.dbclose();
         leg: get_combination(topdress_attachment),
         claw: get_combination(topdress_attachment),
         ornament: get_combination(ornaments_attachment),
-        },
         attr:{
             agility:0,
             stamina:0,
@@ -72,7 +64,8 @@ await dbobj.dbclose();
         },
         repair_cost:0,
         animations:[1,2,3],
-        crd_on:new Date()
+        crd_on:new Date(),
+        stat:"A"
     };
     return character;
 }

@@ -26,60 +26,54 @@ router.post('/', async (req, res) => {
                 /* BUILD RESPONSE */
                 response = {
                     "status": "S",
-                    "msg": "Success",
+                    "msg": "SUCCESS",
                     "app_config": {
                         "f_u": "N",
+                        "url": "https://play.google.com/store/apps/details?id=com.chennaigames.mrracer",
                         "m": "N",
                         "i_d": "N",
-                        "m_t": 0
+                        "m_t": 3600
                     },
-                    
-                    "player_Details": {
-                        "coin_balance": random_number(1,10000),
-                        "nickname": "super_surfer",
-                        "char_details": {
-                            "gender": 0,
-                            "b_id": "1",
-                            "c_id": "1",
-                            "avatar": "1",
-                            "xp_level": 1,
-                            "c_xp": xp_val,
-                            "t_xp": 500,
-                            "p_p": Math.round((xp_val/500)*100),
-                            "d_xp": xp_val+"/500 XP",
-                            "rarity": "RARE",
-                            "char_name": "sachin_sloth",
-                            "asset_details": {
-                                gender: 2,
-                                board: 1,
-                                top_dress: 3,
-                                bottom_dress: 1,
-                                back: 1,
-                                face: 13,
-                                glass: 2,
-                                head: 8,
-                                hair: 4,
-                                hand: 1,
-                                leg: 10,
-                                claw: 5,
-                                ornament: 1,
-                            },
-                            "attr": {
-                                "agility": random_number(1,100),
-                                "stamina": random_number(1,100),
-                                "energy": random_number(1,100),
-                                "durability": random_number(1,100),
-                                "speed": random_number(1,100),
-                                "damage": random_number(1,50)
-                            },
-                            "repair_cost": 500,
-                            "animations": [
-                                1,
-                                2,
-                                3
-                            ]
+                    "char_details": {
+                        "unit_type": 2,
+                        "unit_id": 2,
+                        "gender": 1,
+                        "xp_level": 1,
+                        "c_xp": 50,
+                        "t_xp": 500,
+                        "p_p": 10,
+                        "d_xp": "50/500XP",
+                        "rarity": "common",
+                        "char_name": "sloth_2",
+                        "board": 1,
+                        "top_dress": 1,
+                        "bottom_dress": 1,
+                        "back": 1,
+                        "face": 2,
+                        "glass": 3,
+                        "head": 9,
+                        "hair": 6,
+                        "hand": 7,
+                        "leg": 5,
+                        "claw": 5,
+                        "ornament": 1,
+                        "attr": {
+                            "agility": 0,
+                            "stamina": 0,
+                            "energy": 0,
+                            "durability": 0,
+                            "speed": 0,
+                            "damage": 0
                         },
-        
+                        "repair_cost": 0,
+                        "animations": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "crd_on": "2023-01-05T09:14:33.535Z",
+                        "stat": "A",
+                        "aid": "pHbZQCiFyB7UPDkx"
                     }
                 }
 

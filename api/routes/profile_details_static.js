@@ -23,54 +23,71 @@ router.post('/', async (req, res) => {
         /* REQUEST PARAMETERS */
         var data = req.body;
                 /* BUILD RESPONSE */
-                response = {
+                response ={
                     "status": "S",
-                    "msg": "Success",
-                    "app_config": app_config,
-                    "owned_char":[1,2,3,4,5],
-                    last_selected_index:1,
-                    "player_Details": {
-                        "coin_balance": 1000,
-                        "nickname": "super_surfer",
-                        "char_details": {
-                            "gender": 0,
-                            "b_id": "1",
-                            "c_id": "1",
-                            "avatar_id": "1",
-                            "xp_level": 1,
-                            "c_xp": 10,
-                            "t_xp": 500,
-                            "p_p": 70,
-                            "d_xp": "10/500 XP",
-                            "rarity": "common",
-                            "char_name": "supreme_sloth",
-                            "asset_details": {
-                                gender: 2,
-                                board: 1,
-                                top_dress: 3,
-                                bottom_dress: 1,
-                                back: 1,
-                                face: 13,
-                                glass: 2,
-                                head: 8,
-                                hair: 4,
-                                hand: 1,
-                                leg: 10,
-                                claw: 5,
-                                ornament: 1,
-                            },
-                            "attr": {
-                                "agility": 10,
-                                "stamina": 20,
-                                "energy": 100,
-                                "durability": 10,
-                                "speed": 20,
-                                "damage": 0
-                            },
-                            "repair_cost": 50,
-                            "animations": [ 1,2,3 ]
+                    "msg": "SUCCESS",
+                    "app_config": {
+                        "f_u": "N",
+                        "url": "https://play.google.com/store/apps/details?id=com.chennaigames.mrracer",
+                        "m": "N",
+                        "i_d": "N",
+                        "m_t": 3600
+                    },
+                    "coin_balance": 4500,
+                    "owned_char": [
+                        {
+                            "unit_type": 1,
+                            "unit_id": 1
                         },
-        
+                        {
+                            "unit_type": 2,
+                            "unit_id": 1
+                        },
+                        {
+                            "unit_type": 2,
+                            "unit_id": 2
+                        }
+                    ],
+                    "player_details": {
+                        "nickname": "winner"
+                    },
+                    "char_details": {
+                        "unit_type": 2,
+                        "unit_id": 1,
+                        "gender": 1,
+                        "xp_level": 1,
+                        "c_xp": 50,
+                        "t_xp": 500,
+                        "p_p": 10,
+                        "d_xp": "50/500XP",
+                        "rarity": "rare",
+                        "char_name": "sloth_1",
+                        "board": 1,
+                        "top_dress": 3,
+                        "bottom_dress": 3,
+                        "back": 1,
+                        "face": 14,
+                        "glass": 6,
+                        "head": 4,
+                        "hair": 6,
+                        "hand": 5,
+                        "leg": 1,
+                        "claw": 5,
+                        "ornament": 1,
+                        "attr": {
+                            "agility": 0,
+                            "stamina": 0,
+                            "energy": 0,
+                            "durability": 0,
+                            "speed": 0,
+                            "damage": 0
+                        },
+                        "repair_cost": 0,
+                        "animations": [
+                            1,
+                            2,
+                            3
+                        ]
                     }
                 }
         /* LOGGER */

@@ -25,7 +25,6 @@ router.post('/', async (req, res) => {
         let data = req.body;
         let aid = data.aid;
 
-
         let query_parameter = { aid: aid };
         let player_profile = await dbobj.db.collection("app_user_profile_details").findOne(query_parameter);
         /* PLAYER PROFILE FOR NICKNAME */
@@ -41,34 +40,38 @@ router.post('/', async (req, res) => {
                 let query_parameter = { aid: aid, unit_id: last_selected_unit.unit_id };
                 if (last_selected_unit.unit_type === 1) collection_name = "app_non_tradable_assets";
                 if (last_selected_unit.unit_type === 2) collection_name = "app_tradable_assets_master";
-                let char = await dbobj.db.collection(collection_name).findOne(query_parameter);
+                let options = {projection:{_id:0,crd_on:0,stat:0,aid:0}}
+                let char = await dbobj.db.collection(collection_name).findOne(query_parameter,options);
                 if (char) char_details = char;
             }
 
             let agg = [
-                { $match: { aid: aid } },
-                { $group: { _id: "$unit_type", list: { $push: '$$ROOT.unit_id' } } },
-                { $project: { _id: 0, unit_type: "$_id", car_list: "$list" } }
+                { $match: { aid: "pHbZQCiFyB7UPDkx" } },
+                { $group: { _id: '$unit_type', list: { $push: '$unit_id' } } },
+                { $project: { _id: 0, unit_type: "$_id", unit_id: "$list" } },
+                { $unwind: '$unit_id' },
+                {$sort:{unit_type:1}}
             ];
             let owned_char = await dbobj.db.collection("app_asset_ownership").aggregate(agg).toArray();
             console.log(owned_char, "owned char::::::");
+
             /* TOTAL OWNED CHARACTERS */
             if (owned_char.length > 0) total_owned_char = owned_char;
+
             /* AVAILABLE PLAYER COINS */
             let coins_value = await dbobj.db.collection("app_coins").findOne(query_parameter);
             if (coins_value) coins = coins_value.coin_balance;
 
             player_details.nickname = nick_name;
-            player_details.coin_balance = coins;
-            player_details.char_details = char_details;
-
+    
             /* RESPONSE */
             response.status = status;
             response.msg = "SUCCESS";
             response.app_config = app_config;
-            response.owned_char = owned_char;
+            response.coin_balance = coins;
+            response.owned_char = total_owned_char;
             response.player_details = player_details;
-
+            response.char_details = char_details;
         }
 
         /* LOGGER */
@@ -82,7 +85,7 @@ router.post('/', async (req, res) => {
         res.send(UTILS.error())
     }
     finally {
-        //await dbobj.dbclose();
+        await dbobj.dbclose();
     }
 })
 

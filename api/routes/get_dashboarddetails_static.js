@@ -66,111 +66,109 @@ router.post("/", async (req, res) => {
 
       /* BUILD RESPONSE */
       response = {
-        status: "S",
-        msg: "Success",
-        app_config: {
-          f_u: "N",
-          m: "N",
-          i_d: "N",
-          m_t: 0,
+        "status": "S",
+        "msg": "SUCCESS",
+        "app_config": {
+            "f_u": "N",
+            "url": "https://play.google.com/store/apps/details?id=com.chennaigames.mrracer",
+            "m": "N",
+            "i_d": "N",
+            "m_t": 3600
         },
-        player_Details: {
-          coin_balance:8000,
-          nickname:"sloth_king",
-          char_details: {
-            gender: 0,
-            b_id: 1,
-            c_id: 1,
-            avatar_id: 1,
-            xp_level: 1,
-            c_xp: 10,
-            t_xp: 500,
-            p_p: 70,
-            d_xp: "10/500 XP",
-            rarity: "common",
-            char_name: "supreme_sloth",
-            asset_details: {
-              gender: 2,
-              board: 1,
-              top_dress: 3,
-              bottom_dress: 1,
-              back: 1,
-              face: 13,
-              glass: 2,
-              head: 8,
-              hair: 4,
-              hand: 1,
-              leg: 10,
-              claw: 5,
-              ornament: 1,
+        "coin_balance": 4500,
+        "player_details": {
+            "nickname": "winner"
+        },
+        "char_details": {
+            "unit_type": 2,
+            "unit_id": 1,
+            "gender": 1,
+            "xp_level": 1,
+            "c_xp": 50,
+            "t_xp": 500,
+            "p_p": 10,
+            "d_xp": "50/500XP",
+            "rarity": "rare",
+            "char_name": "sloth_1",
+            "board": 1,
+            "top_dress": 3,
+            "bottom_dress": 3,
+            "back": 1,
+            "face": 14,
+            "glass": 6,
+            "head": 4,
+            "hair": 6,
+            "hand": 5,
+            "leg": 1,
+            "claw": 5,
+            "ornament": 1,
+            "attr": {
+                "agility": 0,
+                "stamina": 0,
+                "energy": 0,
+                "durability": 0,
+                "speed": 0,
+                "damage": 0
             },
-            attr: {
-              agility: 10,
-              stamina: 20,
-              energy: 100,
-              durability: 10,
-              speed: 20,
-              damage: 0,
+            "repair_cost": 0,
+            "animations": [
+                1,
+                2,
+                3
+            ]
+        },
+        "referral_details": {
+            "referral_code": "UWTYCK",
+            "players_referred": 0,
+            "cs_btn": "Y",
+            "share_txt": "you and your friend will be rewarded",
+            "r_bonus": 5000
+        },
+        "upgr": [
+            {
+                "id": 1,
+                "title": "Coin Magnet",
+                "desc": "Automatically collects all nearby coins",
+                "upgr_cost": 10000,
+                "c_level": 4,
+                "t_level": 10,
+                "p_percent": 40
             },
-            repair_cost: 50,
-            animations: [1, 2, 3],
-          },
-        },
-        referral_details: {
-          code: "123ABC",
-          r_bonus: 5000,
-          is_redeemed: "Y",
-        },
-        upgrades: [
-          {
-            id: 1,
-            title: "Coin Magnet",
-            desc: "Automatically collects all nearby coins",
-            upgr_cost: 1000,
-            c_level: 1,
-            t_level: 10,
-            p_percent: 10,
-            btn_status: 1,
-          },
-          {
-            id: 2,
-            title: "2x Multiplier",
-            desc: "multiply 2x Score while the powerup is active",
-            upgr_cost: 1000,
-            c_level: 1,
-            t_level: 10,
-            p_percent: 10,
-            btn_status: 1,
-          },
-          {
-            id: 3,
-            title: "Shield",
-            desc: "protect you from single hit while active",
-            upgr_cost: 1000,
-            c_level: 1,
-            t_level: 10,
-            p_percent: 10,
-            btn_status: 1,
-          },
-          {
-            id: 4,
-            title: "Fly Board",
-            desc: "Airborne from the waves and obstacles",
-            upgr_cost: 1000,
-            c_level: 1,
-            t_level: 10,
-            p_percent: 10,
-            
-            btn_status: 1,
-          },
-        ], 
-        settings: {
-          info: "The account is used to save your game progress,Locations earned Hurley coins and other information",
-          p_p: "https://www.hurley.com/account/login?return_url=%2Faccount",
-          t_o_u: "http://hurley.com/",
-          supp: "http://hurley.support.com/",
-        },
-      }
+            {
+                "id": 2,
+                "title": "2x Multiplier",
+                "desc": "multiply 2x Score while the powerup is active",
+                "upgr_cost": 6000,
+                "c_level": 2,
+                "t_level": 10,
+                "p_percent": 20
+            },
+            {
+                "id": 3,
+                "title": "Shield",
+                "desc": "protect you from single hit while active",
+                "upgr_cost": 1000,
+                "c_level": 1,
+                "t_level": 10,
+                "p_percent": 10
+            },
+            {
+                "id": 4,
+                "title": "Fly Board",
+                "desc": "Airborne from the waves and obstacles",
+                "upgr_cost": 1000,
+                "c_level": 1,
+                "t_level": 10,
+                "p_percent": 10
+            }
+        ],
+        "settings": {
+            "info": "The account is used to save your game progress,Locations earned Hurley coins and other information",
+            "p_p": "https://www.hurley.com/account/login?return_url=%2Faccount",
+            "t_o_u": "http://hurley.com/",
+            "supp": "http://hurley.support.com/"
+        }
+    }
     // }
     // else {
     //   response = UTILS.error();

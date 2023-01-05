@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
             }
 
             let agg = [
-                { $match: { aid: "pHbZQCiFyB7UPDkx" } },
+                { $match: { aid: aid } },
                 { $group: { _id: '$unit_type', list: { $push: '$unit_id' } } },
                 { $project: { _id: 0, unit_type: "$_id", unit_id: "$list" } },
                 { $unwind: '$unit_id' },
@@ -76,6 +76,7 @@ router.post('/', async (req, res) => {
 
         /* LOGGER */
         logger.log({ level: 'info', type: 'Response', message: response });
+        console.log(response,"response:::::");
         /* OUTPUT */
         res.send(response);
     }

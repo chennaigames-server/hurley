@@ -1,32 +1,31 @@
 let express = require('express');
 let router = express.Router();
-const CONFIG = require('../../common/inc.config');
 const UTILS = require('../../utils/util.functions');
 
 /* MAIN SCRIPT STARTS */
 router.post('/', async (req, res) => {
     /* DEFAULT VALUES */
     let response = {};
-    let player_details = {};
     let status = "S";
     let app_config = UTILS.get_app_config();
+
     /* DATABASE REFERENCE */
     const dbconn = require('../../common/inc.dbconn');
     const dbobj = new dbconn();
+
     /* LOGGER MODULE */
     let loggerobj = require('../../classes/class.logger');
     let winston = new loggerobj(__filename);
     let logger = winston.logger();
-    let xp_val = random_number(1,50);
 
     try {
-
         /* REQUEST PARAMETERS */
         let data = req.body;
         let aid = data.aid;
-        let unit_id = data.unit_id;
-        let unit_type = data.unit_type;
+        let unit_id = parseInt(data.unit_id);
+        let unit_type = parseInt(data.unit_type);
 
+        console.log(data,"data char details");
         let collection_name = "";
         if(unit_type == 1) collection_name = "app_non_tradable_assets";
         if(unit_type == 2) collection_name = "app_tradable_assets_master";

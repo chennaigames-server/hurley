@@ -101,7 +101,8 @@ router.post('/', async (req, res) => {
                                 },
                               ]
                         },
-                        owned_char: [1, 2, 3, 4]
+                        owned_char: [{unit_type:1,unit_id:1}],
+                        stat:"A"
                     };
 
                     if (nickname && !r_code) {

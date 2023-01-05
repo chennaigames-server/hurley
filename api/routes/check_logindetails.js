@@ -27,8 +27,8 @@ router.post('/', async (req, res) => {
   var dbobj = new dbconn();
 
   /* COMMON DB FUNCTIONS */
-//   var dbfunctions = require('../../classes/class.db_functions');
-//   var dbfuncobj = new dbfunctions();
+  //   var dbfunctions = require('../../classes/class.db_functions');
+  //   var dbfuncobj = new dbfunctions();
 
   // /* INBOX MODULE CLASS */
   // const inbox = require('../../classes/class.inbox');
@@ -47,14 +47,14 @@ router.post('/', async (req, res) => {
     if (data.hasOwnProperty('email_id') && aid != false && data.hasOwnProperty("aid")) {
 
       /* GETTING RANDOM GAMETIPS */
-    //   game_tips = await dbfuncobj.get_game_tips(dbobj, CONFIG.GAME_TIPS_COUNT);
+      //   game_tips = await dbfuncobj.get_game_tips(dbobj, CONFIG.GAME_TIPS_COUNT);
 
       // /* SYNCING PERSONAL INBOX */
       // await inboxobj.sync_msg(aid, dbobj);
       // /*************************/
 
       var query_parameter = { aid: aid };
-      var projection_parameter = {_id: 0,active_device: 1,block_info: 1,app_ver: 1,guest: 1 };
+      var projection_parameter = { _id: 0, active_device: 1, block_info: 1, app_ver: 1, guest: 1 };
 
       var get_exist_data = await dbobj.db.collection('app_user_accounts').find(query_parameter).project(projection_parameter).toArray();
       console.log(get_exist_data);
@@ -66,7 +66,7 @@ router.post('/', async (req, res) => {
 
             /* GET LANDING VALUE FROM GAME DB */
             var query_data = { aid: aid };
-            
+
             var landing_data = await dbobj.db.collection('app_user_landing_screen').find(query_data).toArray();
             (landing_data.length > 0) ? l_code = landing_data[0].l_type : l_code = 0;
 
@@ -106,25 +106,16 @@ router.post('/', async (req, res) => {
     }
 
     /* LOGGER */
-    logger.log({
-      level: 'info',
-      type: 'Response',
-      message: response
-    });
-
+    logger.log({ level: 'info',type: 'Response',message: response });
     /* OUTPUT */
     res.send(response);
   }
   catch (err) {
-
     /* LOGGER */
-    logger.log({
-      level: 'error',
-      message: err
-    });
-    var response = UTILS.error();
-    res.send(response);
+    logger.log({ level: 'error',message: err });
 
+    response = UTILS.error();
+    res.send(response);
   }
   finally {
     await dbobj.dbclose();

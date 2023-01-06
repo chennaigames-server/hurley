@@ -1,4 +1,6 @@
 module.exports = {
+
+    share_txt : 'Hey Buddy,\nI enjoy playing RADDX - Racing Metaverse game!\nIt is a virtual world with stunning locations, Real-Time Multiplayer racing with attractive cars, chasing cops, power-ups, Mystery Box, rewards for Premium Tournaments & much more!\n\nUse my referral code ' +  "r_code" + ' to get 5,000 RADDX Coins (RC) for free!\nTry it out:',
     /* GUARDIAN MARKETPLACE API CREDENTIALS */
     GUARDIAN_API_SECRET_KEY: '07cae3427871921bdd6b22b45d60b242cf57d9f0c6396f60cf2e2ed3cc6ea643',
     GUARDIAN_API_URL: 'https://baseapi.guardiangames.trade/api/v1',

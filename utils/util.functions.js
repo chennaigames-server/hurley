@@ -505,6 +505,18 @@ function end_of_week(date) {
 	return new Date(date.setDate(diff));
 
 }
+
+function gameid_generate(num){
+    let numtostr = num.toString(),split = numtostr.split(''),final_str = "";
+     split.forEach(data=>{ final_str += alphabetfromnumber(parseInt(data)) });
+     return final_str;
+}
+
+function alphabetfromnumber(n) {
+  let arr = ["A","B","C","D","E","F","G","H","I","J"];
+  return arr[n];
+};
+
 module.exports = {
     get_remaining_seconds,
     get_app_config,
@@ -527,6 +539,6 @@ module.exports = {
     transaction_log,
     CURRENT_DATE,
     check_swear_word,
-    create_event
-   
+    create_event,
+    gameid_generate
 }

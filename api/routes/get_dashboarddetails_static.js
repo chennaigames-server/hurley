@@ -118,11 +118,14 @@ router.post("/", async (req, res) => {
             ]
         },
         "referral_details": {
-            "referral_code": "UWTYCK",
-            "players_referred": 0,
-            "cs_btn": "Y",
-            "share_txt": "you and your friend will be rewarded",
-            "r_bonus": 5000
+            r_code: r_code,
+            r_count: '<color=#E5AD0F>' + r_count + '</color>',
+            c_bonus: c_bonus,
+            trans_id: trans_id,
+            is_redeemed: is_redeemed,
+            note: CONFIG.MESSAGES.REFERRAL_NOTE,
+            share_text: 'Hey Buddy,\nI enjoy playing RADDX - Racing Metaverse game!\nIt is a virtual world with stunning locations, Real-Time Multiplayer racing with attractive cars, chasing cops, power-ups, Mystery Box, rewards for Premium Tournaments & much more!\n\nUse my referral code ' + r_code + ' to get 5,000 RADDX Coins (RC) for free!\nTry it out:'
+
         },
         "upgr": [
             {

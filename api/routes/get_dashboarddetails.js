@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const UTILS = require("../../utils/util.functions");
+const CONFIG = require("../../common/inc.config");
+
 
 /* MAIN SCRIPT STARTS */
 router.post("/", async (req, res) => {
@@ -45,9 +47,10 @@ router.post("/", async (req, res) => {
         let char = await dbobj.db.collection(collection_name).findOne(query_parameter,options);
         if(char) char_details = char;
       }
-
+//referral_details.is_redeemed = (share_details.to_redeem) ? "N" : "Y"
       let share_details = await dbobj.db.collection("app_referral_code_master").findOne(query_parameter,options);
-      if (share_details) referral_details.referral_code = share_details.referral_code, referral_details.players_referred = share_details.total_redeem, referral_details.cs_btn = (share_details.to_redeem) ? "N" : "Y", referral_details.share_txt = "you and your friend will be rewarded", referral_details.r_bonus = 5000;
+      if (share_details) referral_details.r_code = share_details.referral_code, referral_details.r_count = share_details.total_redeem, referral_details.is_redeemed = "N" , referral_details.share_txt = CONFIG.share_txt
+      , referral_details.r_bonus = 5000,referral_details.note = "you and your friend will be rewarded 500 hurley coins";
 
       let coins_value = await dbobj.db.collection("app_coins").findOne(query_parameter,l_options);
       if (coins_value) coins = coins_value.coin_balance;

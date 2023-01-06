@@ -24,7 +24,9 @@ router.post('/', async (req, res) => {
 
     try {
         /* REQUEST PARAMETERS */
-  
+        let data = req.boidy;
+        let aid = data.aid;
+        let game_id = UTILS.gameid_generate(new Date().getTime());
 
    
 
@@ -35,38 +37,7 @@ router.post('/', async (req, res) => {
             "game_token" :"8das7fy78adsf",
             "msg": "successfully",
             "app_config": app_config,
-              "missions": [
-              {
-                "id": 1,
-                " ": 1,
-                "mission": "COLLECT 450 COINS IN SINGLE RACE",
-                "coin_bonus": 250,
-                "c_progress": 225,
-                "t_progress": 450,
-                "p_percent": 50,
-                "btn_status": 1
-              },
-              {
-                "id": 1,
-                "type": 1,
-                "mission": "COLLECT 450 COINS IN SINGLE RACE",
-                "coin_bonus": 250,
-                "c_progress": 225,
-                "t_progress": 450,
-                "p_percent": 50,
-                "btn_status": 1
-              },
-              {
-                "id": 1,
-                "type": 1,
-                "mission": "COLLECT 450 COINS IN SINGLE RACE",
-                "coin_bonus": 250,
-                "c_progress": 225,
-                "t_progress": 450,
-                "p_percent": 50,
-                "btn_status": 1
-              }
-            ]
+
           }
 
         /* LOGGER */

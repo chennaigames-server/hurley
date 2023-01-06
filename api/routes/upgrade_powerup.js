@@ -47,11 +47,14 @@ router.post('/', async (req, res) => {
                 let improve = await dbobj.db.collection("app_user_profile_details").updateOne({ aid: aid, 'details.upgr.id': upgr_id }, {$set:{'details.upgr.$.c_level':lvl_inc,'details.upgr.$.p_percent': p_p,'details.upgr.$.upgr_cost':upgr_cost[1].coins } });
                 console.log(improve, "improve");
 
+                let c_coins = await dbobj.db.collection("app_coins").findOne({ aid: aid });
+                console.log(c_coins.coin_balance ); 
                 response.status = status;
                 response.msg = "SUCCESS";
                 response.upgr_cost = upgr_cost[1].coins;
                 response.p_p = p_p;
                 response.c_level = lvl_inc;
+                response.coin_balance = c_coins.coin_balance 
             }
             else {
                 response.status = "E"

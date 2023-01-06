@@ -13,7 +13,7 @@ class api_router {
         /* PRE-LOGIN */
         route.use('/get_remoteconfig', require('./routes/get_remoteconfig'));
 
-        /* LOGIN LOGOUT REGISTER VALIDATEOTP*/
+        /* LOGIN LOGOUT REGISTER VALIDATE_OTP*/
         route.use('/register_user',require('./routes/register_user'));
         route.use('/login_user',require('./routes/login_user'));
         route.use('/guest_user',require('./routes/play_as_guest'));
@@ -27,6 +27,9 @@ class api_router {
         /* GAME DASHBOARD */
         route.use('/get_dashboarddetails',require('./routes/get_dashboarddetails'));
 
+        /* REFERRAL (OR) SHARE*/
+        route.use('/redeem_referralcode',require('./routes/redeem_referralcode'));
+
         /* PROFILE DETAILS */
         route.use('/profile_details',require('./routes/profile_details'));
         route.use('/get_char_details',require('./routes/get_char_details'));
@@ -35,7 +38,6 @@ class api_router {
         /* RANKING */
         // route.use('/get_rankings',require('./routes/get_rankings'));
         route.use('/get_rankings',require('./routes/get_rankings_static'));
-
 
         /* UPGRADE */
         route.use('/upgrade_powerup',require('./routes/upgrade_powerup'));

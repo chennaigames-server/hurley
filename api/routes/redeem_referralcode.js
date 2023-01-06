@@ -23,8 +23,8 @@ router.post('/', async (req, res) => {
     const dbobj = new dbconn();
 
     /* MARKETPLACE CLASS */
-    const guardiangames = require('../../mp_classes/class.guardiangames');
-    var guardianobj = new guardiangames();
+    // const guardiangames = require('../../mp_classes/class.guardiangames');
+    // var guardianobj = new guardiangames();
 
     try {
 
@@ -34,54 +34,58 @@ router.post('/', async (req, res) => {
         var aid = data.aid;
         var email_id = data.email_id;
 
-        if (aid != false && data.hasOwnProperty("aid") && r_code != '' && data.hasOwnProperty("r_code") && aid) {
+        if ("aid" in data && aid && "r_code" in data && r_code) {
+
 
             /* VALIDATE REFERRAL CODE FROM THE CLIENT */
             var query_parameter = { referral_code: r_code, aid: { $ne: aid } };
             var check_referral_exist = await dbobj.db.collection('app_referral_code_master').find(query_parameter).toArray();
             /* IF VALID, RESPONSE SUCCESS */
             if (check_referral_exist.length > 0) {
-                var insert_redeem_data = {
-                    referee: aid,
-                    referrer: check_referral_exist[0].aid,
-                    is_played: 'N',
-                    crd_on: UTILS.CURRENT_DATE(new Date()),
-                    mdy_on: '',
-                    stat: "A"
-                }
-
-                /* INSERTING REDEEM DETAILS */
-                var insert_redeem_details = await dbobj.db.collection('app_redeemed_details').insertOne(insert_redeem_data)
-
-                /* UPDATING REFERRER REFERRAL COUNT */
-                var increment = await dbobj.db.collection('app_referral_code_master').bulkWrite([{
-                    updateOne: {
-                        filter: { aid: check_referral_exist[0].aid },
-                        update: { $inc: { total_redeem: 1 } }
+                let is_redeemed = await dbobj.db.collection("app_redeemed_details").findOne({ referrer: check_referral_exist[0].aid, referee: aid })
+                if (is_redeemed) {
+                    response_code = 0;
+                    msg = "ALREADY REDEEMED";
+                } else {
+                    var insert_redeem_data = {
+                        referee: aid,
+                        referrer: check_referral_exist[0].aid,
+                        crd_on: UTILS.CURRENT_DATE(new Date()),
+                        mdy_on: '',
+                        stat: "A"
                     }
-                }, {
-                    updateOne: {
-                        filter: { aid: aid },
-                        update: { $set: { claimed: 'Y' } }
-                    }
-                }
-                ])
 
-                response_code = 1;
-                msg = CONFIG.MESSAGES.SUCCESS;
-                var check_played_pot_race = await dbobj.db.collection('app_user_profile_details').find({ aid: aid, 'details.played_pot_race': 'N' }).toArray()
-                if (check_played_pot_race.length > 0) {
-                    msg = CONFIG.MESSAGES.REFERRAL_SUCCESS_MSG;
+                    /* INSERTING REDEEM DETAILS */
+                    await dbobj.db.collection('app_redeemed_details').insertOne(insert_redeem_data)
+
+                    /* UPDATING REFERRER REFERRAL COUNT */
+                    var increment = [
+                        { updateOne: { filter: { aid: check_referral_exist[0].aid }, update: { $inc: { total_redeem: 1 } } } },
+                        { updateOne: { filter: { aid: aid }, update: { $set: { claimed: 'Y' } } } }
+                    ];
+                    await dbobj.db.collection('app_referral_code_master').bulkWrite(increment);
+
+                    response_code = 1;
+                    msg = CONFIG.MESSAGES.SUCCESS;
+
+                    let coin_inc = [
+                        { updateOne: { filter: { aid: check_referral_exist[0].aid }, update: { $inc: { coin_balance: 5000 } } } },
+                        { updateOne: { filter: { aid: aid }, update: { $inc: { coin_balance: 5000 } } } }
+                    ];
+                    await dbobj.db.collection("app_coins").bulkWrite(coin_inc);
                 }
+
+
             } else {
                 response_code = 0;
                 msg = CONFIG.MESSAGES.INVALID_REFERRAL;
             }
 
+            let coins = await dbobj.db.collection("app_coins").findOne({ aid: aid }, { projection: { _id: 0, coin_balance: 1 } })
             /* BUILD RESPONSE */
             response = {
                 status: status,
-                ut_balance: rc_balance,
+                coin_balance: coins.coin_balance,
                 response_code: response_code,
                 msg: msg,
                 app_config: app_config
@@ -89,23 +93,14 @@ router.post('/', async (req, res) => {
         }
 
         /* LOGGER */
-        logger.log({
-            level: 'info',
-            type: 'Response',
-            message: response
-        });
-
+        logger.log({ level: 'info', type: 'Response', message: response });
         /* OUTPUT */
         res.send(response);
     }
     catch (err) {
-
         /* LOGGER */
-        logger.log({
-            level: 'error',
-            message: err
-        });
-        var response = UTILS.error();
+        logger.log({ level: 'error', message: err });
+        response = UTILS.error();
         res.send(response);
     }
     finally {

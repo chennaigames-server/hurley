@@ -66,6 +66,9 @@ class api_router {
         /* SETTINGS */
         // route.use('/get_gamesettings',require('./routes/get_gamesettings'));
 
+        /* SHOP */
+        route.use('/get_store_data',require('./routes/get_store_data'));
+
         return route;
     }
 }

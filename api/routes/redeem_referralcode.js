@@ -56,11 +56,42 @@ router.post('/', async (req, res) => {
                     }
 
                     /* INSERTING REDEEM DETAILS */
-                    await dbobj.db.collection('app_redeemed_details').insertOne(insert_redeem_data)
+                    await dbobj.db.collection('app_redeemed_details').insertOne(insert_redeem_data);
+
+                    let referral_trasanction = [
+                        {
+                            insertOne: {
+                                aid: check_referral_exist[0].aid,
+                                coins: 500,
+                                reason: "REFERRAL",
+                                details: {},
+                                is_claimed: "N",
+                                crd_on: UTILS.CURRENT_DATE(new Date()),
+                                mdy_on: "",
+                                stat: "A"
+                            }
+                        },
+                        {
+                            insertOne: {
+                                aid: aid,
+                                coins: 500,
+                                reason: "REFERRAL",
+                                details: {},
+                                is_claimed: "Y",
+                                crd_on: UTILS.CURRENT_DATE(new Date()),
+                                mdy_on: "",
+                                stat: "A"
+                            }
+                        }
+                    ]
+                    // var referral_claim = await dbobj.db.collection('app_coins_transaction').insertOne(referral_trasanction)
+                    var referral_claim = await dbobj.db.collection('app_coins_transaction').bulkWrite(referral_trasanction)
+
+
 
                     /* UPDATING REFERRER REFERRAL COUNT */
                     var increment = [
-                        { updateOne: { filter: { aid: check_referral_exist[0].aid }, update: { $inc: { total_redeem: 1 } } } },
+                        { updateOne: { filter: { aid: check_referral_exist[0].aid }, update: { $inc: { total_redeem: 1, to_redeem:1 } } } },
                         { updateOne: { filter: { aid: aid }, update: { $set: { claimed: 'Y' } } } }
                     ];
                     await dbobj.db.collection('app_referral_code_master').bulkWrite(increment);
@@ -69,8 +100,8 @@ router.post('/', async (req, res) => {
                     msg = CONFIG.MESSAGES.SUCCESS;
 
                     let coin_inc = [
-                        { updateOne: { filter: { aid: check_referral_exist[0].aid }, update: { $inc: { coin_balance: 5000 } } } },
-                        { updateOne: { filter: { aid: aid }, update: { $inc: { coin_balance: 5000 } } } }
+                        // { updateOne: { filter: { aid: check_referral_exist[0].aid }, update: { $inc: { coin_balance: 500 } } } },
+                        { updateOne: { filter: { aid: aid }, update: { $inc: { coin_balance: 500 } } } }
                     ];
                     await dbobj.db.collection("app_coins").bulkWrite(coin_inc);
                 }

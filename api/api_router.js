@@ -22,7 +22,7 @@ class api_router {
         route.use('/check_logindetails',require('./routes/check_logindetails'));
 
         /* MISSIONS */
-        route.use('/get_dailymissions',require('./routes/get_dailymissions'));
+        route.use('/get_missions',require('./routes/get_missions'));
 
         /* GAME DASHBOARD */
         route.use('/get_dashboarddetails',require('./routes/get_dashboarddetails'));

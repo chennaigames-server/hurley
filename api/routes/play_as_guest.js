@@ -89,7 +89,9 @@ router.post('/', async (req, res) => {
                     stat: 'A',
                     last_otp_sent_time: '',
                     fcm: '',
-                    guest: true
+                    guest: true,
+                    day_count:1,
+                    week_count:1
                 }
 
                 await dbobj.db.collection('app_user_accounts').insertOne(insert_acct_data);

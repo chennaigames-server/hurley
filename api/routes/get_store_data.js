@@ -20,8 +20,7 @@ router.post('/', async (req, res) => {
 
     response = {
       "status": "S",
-      "ut_balance": 20000,
-      "jt_balance": 1000,
+      "coin_balance": 20000,
       "msg": "SUCCESS!",
       "app_config": {
         "f_u": "N",
@@ -82,8 +81,8 @@ router.post('/', async (req, res) => {
         },
         {
           "id": 2,
-          "menu_title": "LIMITED OFFER",
-          "card_title": "LIMITED OFFER",
+          "menu_title": "STARTER PACKS",
+          "card_title": "STARTER PACKS",
           "layout_type": "BANNER",
           "r_time": 3600,
           "data": [
@@ -101,9 +100,9 @@ router.post('/', async (req, res) => {
         },
         {
           "id": 3,
-          "menu_title": "ACCESSORIES",
-          "card_title": "ACCESSORIES",
-          "layout_type": "GRID",
+          "menu_title": "SURFERS",
+          "card_title": "SURFERS",
+          "layout_type": "BANNER",
           "r_time": 3600,
           "data": [
             {
@@ -168,8 +167,8 @@ router.post('/', async (req, res) => {
           ]
         }, {
           "id": 4,
-          "menu_title": "CHARGE",
-          "card_title": "CHARGE",
+          "menu_title": "ENERGY PACKS",
+          "card_title": "ENERGY PACKS",
           "layout_type": "GRID",
           "r_time": 3600,
           "data": [
@@ -216,8 +215,8 @@ router.post('/', async (req, res) => {
           ]
         }, {
           "id": 5,
-          "menu_title": "JT PACKS",
-          "card_title": "JT PACKS",
+          "menu_title": "HURLEY COINS PACKS",
+          "card_title": "HURLEY COINS PACKS",
           "layout_type": "GRID",
           "r_time": 3600,
           "data": [

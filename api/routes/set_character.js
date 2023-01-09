@@ -21,8 +21,8 @@ router.post('/', async (req, res) => {
         /* REQUEST PARAMETERS */
         let data = req.body;
         let aid = data.aid;
-        let unit_id = data.unit_id;
-        let unit_type = data.unit_type;
+        let unit_id = parseInt(data.unit_id);
+        let unit_type = parseInt(data.unit_type);
 
         console.log(data, "data");
 

@@ -25,6 +25,8 @@ router.post("/", async (req, res) => {
     /* REQUEST PARAMETERS */
     var data = req.body;
     let aid = data.aid;
+    let trans_id=" ";
+
 
     let query_parameter = { aid: aid };
     let options = {projection:{_id:0,crd_on:0,stat:0,aid:0}}
@@ -47,10 +49,39 @@ router.post("/", async (req, res) => {
         let char = await dbobj.db.collection(collection_name).findOne(query_parameter,options);
         if(char) char_details = char;
       }
+
+      var transaction_id = await dbobj.db.collection('app_coins_transaction').aggregate([
+        {
+            $match: {
+                aid: aid,
+                reason: { $in: ['REFERRAL', 'REF_REDEEMED'] },
+                is_claimed: 'N',
+                stat: 'A'
+            }
+        },
+        { $project: { _id: 0, ids: '$_id' } },
+        { $group: { _id: 1, data: { $push: { $concat: [{ '$toString': '$ids' }, '||'] } } } },
+        { $project: {
+                uuid: {
+                    $reduce: {
+                        input: '$data',
+                        initialValue: "",
+                        in: { $concat: ['$$value', '$$this'] }
+                    }
+                }
+            }
+        }
+    ]).toArray();
+    console.log(transaction_id,"transaction_id");
+    if (transaction_id.length > 0) {
+        trans_id = transaction_id[0].uuid
+    }
+
 //referral_details.is_redeemed = (share_details.to_redeem) ? "N" : "Y"
       let share_details = await dbobj.db.collection("app_referral_code_master").findOne(query_parameter,options);
       if (share_details) referral_details.r_code = share_details.referral_code, referral_details.r_count = share_details.total_redeem, referral_details.is_redeemed = "N" , referral_details.share_txt = CONFIG.share_txt
-      , referral_details.r_bonus = 5000,referral_details.note = "you and your friend will be rewarded 500 hurley coins";
+      , referral_details.r_bonus = 500,referral_details.note = "you and your friend will be rewarded 500 hurley coins",referral_details.trans_id = trans_id ;
+
 
       let coins_value = await dbobj.db.collection("app_coins").findOne(query_parameter,l_options);
       if (coins_value) coins = coins_value.coin_balance;
@@ -67,6 +98,7 @@ router.post("/", async (req, res) => {
       /* CHARACTER (OR) ASSET DETAILS */
       response.char_details =  char_details;
       /* REFERRAL DETAILS */
+      
       response.referral_details = referral_details;
       /* UPGRADES */
       response.upgr = upgr;

@@ -34,6 +34,15 @@ router.post('/', async (req, res) => {
         let options = {projection:{_id:0,crd_on:0,stat:0,aid:0}}
         let char_details = await dbobj.db.collection(collection_name).findOne(query_parameter,options);
 
+         char_details.attr =  {
+            "agility": random_number(1,100),
+            "stamina": random_number(1,100),
+            "energy": random_number(1,100),
+            "durability": random_number(1,100),
+            "speed": random_number(1,100),
+            "damage": random_number(1,100)
+        };
+
         if(char_details){
             response.status = status;
             response.msg = "SUCCESS";

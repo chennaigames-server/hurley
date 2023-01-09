@@ -11,7 +11,6 @@ router.post('/', async (req, res) => {
     let winston = new loggerobj(__filename);
     let logger = winston.logger();
 
-
     /* DEFAULT VALUES */
     var response = {};
     var status = 'S';

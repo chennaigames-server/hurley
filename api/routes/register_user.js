@@ -100,7 +100,9 @@ router.post('/', async (req, res) => {
                     stat: 'A',
                     last_otp_sent_time: new Date(),
                     fcm: '',
-                    guest:false
+                    guest:false,
+                    day_count:1,
+                    week_count:1
                 }
                  console.log(insert_acct_data,"insert_acct_data:::");
                  //return false

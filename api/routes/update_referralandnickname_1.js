@@ -55,7 +55,6 @@ router.post('/', async (req, res) => {
                         await dbobj.db.collection('app_referral_code_master').insertOne(user_referral)
                         
                     }
-                    let upgr_details = await dbobj.db.collection("app_upgrades").find({}).project({_id:0}).toArray();
 
                     /* INSERT PROFILE NICKNAME */
                     var insert_profile_data = {
@@ -64,7 +63,44 @@ router.post('/', async (req, res) => {
                             nickname: nickname,
                             avatar: 1,
                             last_edited_on: UTILS.CURRENT_DATE(new Date()),
-                            upgr:upgr_details
+                            upgr: [
+                                {
+                                  id: 1,
+                                  title: "Coin Magnet",
+                                  desc: "Automatically collects all nearby coins",
+                                  upgr_cost: 1000,
+                                  c_level: 1,
+                                  t_level: 10,
+                                  p_percent: 10
+                                },
+                                {
+                                  id: 4,
+                                  title: "2x Multiplier",
+                                  desc: "multiply 2x Score while the powerup is active",
+                                  upgr_cost: 1000,
+                                  c_level: 1,
+                                  t_level: 10,
+                                  p_percent: 10
+                                },
+                                {
+                                  id: 2,
+                                  title: "Shield",
+                                  desc: "protect you from single hit while active",
+                                  upgr_cost: 1000,
+                                  c_level: 1,
+                                  t_level: 10,
+                                  p_percent: 10
+                                },
+                                {
+                                  id: 3,
+                                  title: "Fly Board",
+                                  desc: "Airborne from the waves and obstacles",
+                                  upgr_cost: 1000,
+                                  c_level: 1,
+                                  t_level: 10,
+                                  p_percent: 10
+                                },
+                              ]
                         },
                         owned_char: [{unit_type:1,unit_id:1}],
                         stat:"A"

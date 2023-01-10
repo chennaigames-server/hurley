@@ -60,7 +60,8 @@ router.post('/', async (req, res) => {
         /* LOGGER */
         logger.log({ level: 'error',message: err });
         /* ERROR OUTPUT */
-        res.send(UTILS.error())
+        response = UTILS.error();
+        res.send(response)
     }
     finally {
         await dbobj.dbclose();

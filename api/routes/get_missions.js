@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
                 d_missions:[
                     {
                         "id": 1,
-                        "type":1,
+                        "type":5,
                         "mission": "COLLECT 450 COINS IN SINGLE RACE",
                         "coin_bonus": 250,
                         "c_progress": 225,
@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
                     },
                     {
                         "id": 2,
-                        "type":2,
+                        "type":6,
                         "mission": "AVOID 20 OBSTACLES IN SINGLE SURF",
                         "coin_bonus": 250,
                         "c_progress": 10,
@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
                 w_missions:[
                     {
                         "id": 1,
-                        "type":1,
+                        "type":5,
                         "mission": "COLLECT 450 COINS IN SINGLE RACE",
                         "coin_bonus": 250,
                         "c_progress": 225,

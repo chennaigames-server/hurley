@@ -53,9 +53,27 @@ router.post('/', async (req, res) => {
                         }
                         /* INSERTING NEW REFERRAL DATA */
                         await dbobj.db.collection('app_referral_code_master').insertOne(user_referral)
-                        
+
                     }
-                    let upgr_details = await dbobj.db.collection("app_upgrades").find({}).project({_id:0}).toArray();
+                    // let upgr_details = await dbobj.db.collection("app_upgrades").find({}).project({_id:0}).toArray();
+                    // let upgr_cost
+
+                    let aggr = [
+                        { $match: {} },
+                        {
+                            $lookup: {
+                                from: 'app_upgrades_cost',
+                                pipeline: [{ $match: { level: 0 } }, { $project: { _id: 0, coins: '$coins' } }],
+                                as: "data"
+                            }
+                        },
+                        { $unwind: "$data" },
+                        { $project: { _id: 0, id: 1, title: 1, desc: 1, upgr_cost: '$data.coins', c_level: 1, t_level: 1, p_percent: 1,cs_btn: 1 } }
+
+                    ]
+
+                    let upgr_details = await dbobj.db.collection("app_upgrades").aggregate(aggr).toArray();
+                    console.log(upgr_details);
 
                     /* INSERT PROFILE NICKNAME */
                     var insert_profile_data = {
@@ -64,10 +82,10 @@ router.post('/', async (req, res) => {
                             nickname: nickname,
                             avatar: 1,
                             last_edited_on: UTILS.CURRENT_DATE(new Date()),
-                            upgr:upgr_details
+                            upgr: upgr_details
                         },
-                        owned_char: [{unit_type:1,unit_id:1}],
-                        stat:"A"
+                        owned_char: [{ unit_type: 1, unit_id: 1 }],
+                        stat: "A"
                     };
 
                     if (nickname && !r_code) {
@@ -152,9 +170,7 @@ router.post('/', async (req, res) => {
                     status: status,
                     msg: 'Nickname should not be empty',
                     response_code: 2,
-                    landing: {
-                        type: 3
-                    },
+                    landing: { type: 3 },
                     app_config: app_config
                 }
             }

@@ -61,9 +61,13 @@ router.post('/', async (req, res) => {
             /* AVAILABLE PLAYER COINS */
             let coins_value = await dbobj.db.collection("app_coins").findOne(query_parameter);
             if (coins_value) coins = coins_value.coin_balance;
-
+            let cs_btn = "N";
             player_details.nickname = nick_name;
-    
+            if (char_details.attr['damage'] > 0) {
+                cs_btn = "Y"
+            }
+            char_details.cs_btn = cs_btn;
+
             /* RESPONSE */
             response.status = status;
             response.msg = "SUCCESS";

@@ -25,9 +25,13 @@ router.post('/', async (req, res) => {
     try {
         /* REQUEST PARAMETERS */
         let data = req.boidy;
-        // let aid = data.aid;
+        let aid = data.aid;
         let game_id = UTILS.gameid_generate(new Date().getTime());
 
+        let game_result_key = await dbobj.db.collection('app_race_result_log').insertOne({aid:aid,game_id:game_id});
+
+        let missions = await dbobj.db.collection('app_missions_master').find({}).toArray();
+        console.log(missions); 
 
         response = {
             "status": "S",

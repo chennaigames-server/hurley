@@ -34,9 +34,6 @@ router.post("/", async (req, res) => {
         if(lb_type) type = lb_type;
         else type = "DAILY";
 
-         
-
-
         if (lb_id == 0) event_id = await UTILS.create_event(dbobj,type,1),console.log(event_id,"event_id");
         else event_id = lb_id;
 
@@ -111,7 +108,7 @@ router.post("/", async (req, res) => {
         res.send(UTILS.error());
     }
     finally {
-        // await dbobj.dbclose();
+         await dbobj.dbclose();
     }
 });
 

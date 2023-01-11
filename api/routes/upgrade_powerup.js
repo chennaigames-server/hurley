@@ -96,7 +96,7 @@ router.post('/', async (req, res) => {
         res.send(response);
     }
     finally {
-        //await dbobj.dbclose();
+        await dbobj.dbclose();
     }
 })
 module.exports = router;

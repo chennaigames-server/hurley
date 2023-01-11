@@ -4,21 +4,18 @@ const CONFIG = require('../../common/inc.config');
 const UTILS = require('../../utils/util.functions');
 const Object = require('mongodb').ObjectId
 
-
 /* MAIN SCRIPT STARTS */
 router.post('/', async (req, res) => {
     /* LOGGER MODULE */
     let loggerobj = require('../../classes/class.logger');
     let winston = new loggerobj(__filename);
     let logger = winston.logger();
-
     /* DEFAULT VALUES */
     let response = UTILS.error();
     let status = 'S';
     let response_code = 0;
     let msg = '';
     let app_config = UTILS.get_app_config();
-
     /* DATABASE REFERENCE */
     let dbconn = require('../../common/inc.dbconn');
     let dbobj = new dbconn();
@@ -89,7 +86,7 @@ router.post('/', async (req, res) => {
         res.send(response);
     }
     finally {
-        //await dbobj.dbclose();
+        await dbobj.dbclose();
     }
 })
 module.exports = router;

@@ -25,18 +25,16 @@ router.post('/', async (req, res) => {
     try {
         /* REQUEST PARAMETERS */
         let data = req.boidy;
-        // let aid = data.aid;
-        let game_id = UTILS.gameid_generate(new Date().getTime());
-
+        let aid = data.aid;
+        let result = data.result;
+        
 
         response = {
             "status": "S",
             "coin_balance": 10000,
             "response_code": 1,
-            "game_token" : game_id,
             "msg": "SUCCESS",
             "app_config": app_config,
-            "missions":[]
           }
 
         /* LOGGER */

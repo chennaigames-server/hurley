@@ -43,6 +43,8 @@ router.post('/', async (req, res) => {
         var platform = data.platform;
         var aid = 0;
 
+        console.log(data,"data::::::::");
+
         if (email_id != '' && data.hasOwnProperty('email_id') && otp != "" && data.hasOwnProperty("otp")) {
             /* CHECK USER STATUS IS NEW OR RETURNING USER */
             var query_parameter = { email_id: email_id };

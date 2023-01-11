@@ -69,6 +69,12 @@ class api_router {
         /* SHOP */
         route.use('/get_store_data',require('./routes/get_store_data'));
 
+        /* GAME START */
+        route.use('/get_surf',require('./routes/get_surf'));
+
+        /* RESULT */
+        route.use('/update_score',require('./routes/update_score'));
+
         return route;
     }
 }

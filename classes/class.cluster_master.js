@@ -53,8 +53,8 @@ class Server {
         standardmiddleware.attachTo(app);
 
         /* ROUTING TO API-ROUTER ENDPOINTS */
-        app.get('/',function(req,res){res.send('<h1>HURLEY ENDPOINT</h1>')});
-        app.get('/api',function(req,res){res.send('<h1>HURLEY ENDPOINT</h1>')});
+        app.get('/',function(req,res){res.send('<html><body style="background-color:black;"><center><span style="color:red; "><h1>HURLEY ENDPOINT</h1></span>   <img src=https://media.giphy.com/media/5nh8FKSRtxFEyuajGc/giphy.gif></center></body></html>')});
+        app.get('/api',function(req,res){res.send('<html><body style="background-color:black;"><center><span style="color:red; "><h1>HURLEY ENDPOINT</h1></span>   <img src=https://media.giphy.com/media/5nh8FKSRtxFEyuajGc/giphy.gif></center></body></html>')});
         app.use('/api', api_router.create());
         //app.use('/debug',require('../debug/app'));
         app.get('*', (req, res) => res.send('Page Not found 404'));

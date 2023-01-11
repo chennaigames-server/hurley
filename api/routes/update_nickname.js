@@ -8,52 +8,55 @@ const UTILS = require('../../utils/util.functions');
 router.post('/', async (req, res) => {
 
     /* DEFAULT VALUES */
-    var response = {};
-    var status = 'S';
-    var msg = 'Success';
-    var app_config = UTILS.get_app_config();
+    let response = {};
+    let status = 'S';
+    let msg = 'Success';
+    let app_config = UTILS.get_app_config();
 
     /* DATABASE REFERENCE */
-    var dbconn = require('../../common/inc.dbconn');
-    var dbobj = new dbconn();
+    let dbconn = require('../../common/inc.dbconn');
+    let dbobj = new dbconn();
 
     /* LOGGER MODULE */
-    var loggerobj = require('../../classes/class.logger');
+    let loggerobj = require('../../classes/class.logger');
     let winston = new loggerobj(__filename);
     let logger = winston.logger();
     
     try {
         /* REQUEST PARAMETERS */
-        var data = req.body;
-        var aid = data.aid;
+        let data = req.body;
+        let aid = data.aid;
+        console.log(data,"data");
 
         if (aid != '' && data.hasOwnProperty("aid")) {
-            let find = await dbobj.db.collection("app_user_profile_details").findOne({ aid: aid })
-            const last_edited_on = UTILS.CURRENT_DATE(new Date(find.details.last_edited_on));
-            const current_date = UTILS.CURRENT_DATE(new Date());
-            const diffTime = Math.abs(current_date - last_edited_on);
-            const diff_value = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            var update_parameter = { $set: {} }
+            let find = await dbobj.db.collection("app_user_profile_details").findOne({ aid: aid });
+            let last_edited_on = UTILS.CURRENT_DATE(new Date(find.details.last_edited_on));
+            let current_date = UTILS.CURRENT_DATE(new Date());
+            let diffTime = Math.abs(current_date - last_edited_on);
+            let diff_value = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
+            console.log(diff_value,"diff_value");
             if (data.hasOwnProperty('nickname')) {
                 let nick_name = data.nickname;
                 if (nick_name != '') {
                     if (diff_value >= 7) {
-                        update_parameter = { $set: { 'details.nickname': nick_name, 'details.last_edited_on': UTILS.CURRENT_DATE(new Date()) } };
-                        var query_parameter = { aid: aid };
+                        let update_parameter = { $set: { 'details.nickname': nick_name, 'details.last_edited_on': UTILS.CURRENT_DATE(new Date()) } };
+                        let query_parameter = { aid: aid };
                         await dbobj.db.collection('app_user_profile_details').updateOne(query_parameter, update_parameter);
                         response = {
                             status: status,
                             msg: msg,
                             app_config: app_config,
-                            nick_name:nick_name
+                            nick_name:nick_name,
+                            cs_btn:"N",
+                            rem_time:"YOUR NEXT NAME CHANGE CAN BE HAPPEN AFTER 7 DAYS",
                         }
                     } else {
-                        let next_days = (7-diff_value);
+                        let next_days = Math.abs((7-diff_value));
                         response = UTILS.error();
-                        response.msg = "YOU HAVE RECENTLY UPDATED YOUR NICKNAME,YOUR NEXT NAME CHANGE CAN BE HAPPEN AFTER "+next_days+" DAYS"
+                        response.msg = "YOUR NEXT NAME CHANGE CAN BE HAPPEN AFTER "+next_days+" DAYS"
                         if (next_days == 1) {
-                        response.msg = "YOU HAVE RECENTLY UPDATED YOUR NICKNAME,YOUR NEXT NAME CHANGE CAN BE HAPPEN AFTER "+next_days+" DAY"
+                        response.msg = "YOUR NEXT NAME CHANGE CAN BE HAPPEN AFTER "+next_days+" DAY"
                         }
                     }
                 }

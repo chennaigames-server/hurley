@@ -134,7 +134,7 @@ router.post('/', async (req, res) => {
         res.send(response);
     }
     finally {
-        dbobj.dbclose();
+        await dbobj.dbclose();
     }
 })
 

@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
         res.send(UTILS.error())
     }
     finally {
-        //await dbobj.dbclose();
+        await dbobj.dbclose();
     }
 })
 
